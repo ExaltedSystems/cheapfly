@@ -1,0 +1,157 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>
+      Hotel
+    </h1>
+    <!-- <small>Create New Visa</small> -->
+    <ol class="breadcrumb">
+      <li>
+        <a routerLink="/umrah-hotels-list">
+          <i class="fa fa-edit"></i> Umrah Hotels List</a>
+      </li>
+      <li class="active">Add / Update Hotel</li>
+    </ol>
+  </section>
+  <section class="content">
+    <div class="box box-warning">
+      <div class="box-header with-border">
+        <h1 class="text-center box-title">Add / Update Hotel</h1>
+      </div>
+      <div class="box-body">
+        <form [formGroup]="hotelForm" class="classic-form position-relative" (submit)="addUpdateHotel(hotelForm.value)" method="post">
+          <div class="form-group row">
+            <div class="col-sm-2">
+              <label>Location</label>
+              <select formControlName="locationId" class="form-control" placeholder="Hotel Name e.g. Ajum Hotel">
+                <option value="">-- Select Location --</option>
+                <option value="1">Makkah</option>
+                <option value="2">Madinah</option>
+                <option value="3">Jeddah</option>
+              </select>
+              <p class="form-error" *ngIf="hotelForm.controls['locationId'].hasError('required') && hotelForm.controls['locationId'].touched">
+                Location required
+              </p>
+            </div>
+            <div class="col-sm-3">
+              <label>Hotel Name</label>
+              <input type="text" formControlName="hotelName" class="form-control" placeholder="Hotel Name e.g. Ajum Hotel">
+              <p class="form-error" *ngIf="hotelForm.controls['hotelName'].hasError('required') && hotelForm.controls['hotelName'].touched">
+                Hotel Name required
+              </p>
+            </div>
+            <div class="col-sm-2">
+              <label>Hotel Type</label>
+              <select formControlName="hotelType" class="form-control" placeholder="Hotel Name e.g. Ajum Hotel">
+                <option value="2">Economy</option>
+                <option value="3">3 Star</option>
+                <option value="4">4 Star</option>
+                <option value="5">5 Star</option>
+              </select>
+              <p class="form-error" *ngIf="hotelForm.controls['hotelType'].hasError('required') && hotelForm.controls['hotelType'].touched">
+                Hotel type required
+              </p>
+            </div>
+            <div class="col-sm-2">
+              <label>Room Basis</label>
+              <select formControlName="roomType" class="form-control">
+                <option value="">-- Select Basis --</option>
+                <option value="0">RO</option>
+                <option value="1">BB</option>
+                <option value="2">HB</option>
+              </select>
+              <p class="form-error" *ngIf="hotelForm.controls['roomType'].hasError('required') && hotelForm.controls['roomType'].touched">
+                Room basis required
+              </p>
+            </div>
+            <div class="col-sm-2">
+              <label>Hotel Markup %</label>
+              <select formControlName="hotelMarkup" class="form-control">
+                <option value="">-- Select Markup --</option>
+                <option *ngFor="let item of createRange(35)" value="{{item}}">{{item}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-3">
+              <label>Hotel Weekend</label>
+              <ng-multiselect-dropdown [placeholder]="'Select Weekend'" [data]="weekend" formControlName="hotelWeekend"
+              [settings]="dropdownSettings" [(ngModel)]="selectedWeekend"></ng-multiselect-dropdown>
+            </div>
+            <div class="col-sm-2">
+              <label>Weekend %</label>
+              <select formControlName="weekendMarkup" class="form-control">
+                <option value="">-- Weekend % --</option>
+                <option *ngFor="let item of createRange(30)" value="{{item}}">{{item}}</option>
+              </select>
+            </div>
+            <div class="col-sm-3">
+              <label>Hotel Vendor</label>
+              <input type="text" formControlName="hotelVendor" class="form-control" placeholder="e.g. Diyar Al Haram">
+              <p class="form-error" *ngIf="hotelForm.controls['hotelVendor'].hasError('required') && hotelForm.controls['hotelVendor'].touched">
+                Hotel Vendor required
+              </p>
+            </div>
+            <div class="col-sm-2">
+              <label>&nbsp;</label>
+              <br>
+              <mat-checkbox formControlName="status">Status</mat-checkbox>
+            </div>
+          </div>
+          <div formArrayName="accommodations" *ngFor="let hotel of hotelForm.get('accommodations').controls;let i=index">
+            <div formGroupName="{{i}}">
+              <input type="hidden" formControlName="hotelRateId">
+              <div class="form-group row">
+                <div class="col-sm-3 col-xs-6">
+                  <label>Date Range *</label>
+                  <p-calendar formControlName="dateRange" class="form-control" [minDate]="currentDate" selectionMode="range" [numberOfMonths]="3"
+                    [selectOtherMonths]="true" [hideOnDateTimeSelect]="true"></p-calendar>
+                </div>
+                <div class="col-sm-2 col-xs-6">
+                  <label>Double Price</label>
+                  <input type="text" formControlName="dbRoomPrice" class="form-control" maxlength="5" mask="9*" placeholder="e.g. 2000">
+                </div>
+                <div class="col-sm-2 col-xs-6">
+                  <label>Triple Price</label>
+                  <input type="text" formControlName="tpRoomPrice" class="form-control" maxlength="5" mask="9*" placeholder="e.g. 2000">
+                </div>
+                <div class="col-sm-2 col-xs-6">
+                  <label>Quad Price</label>
+                  <input type="text" formControlName="qdRoomPrice" class="form-control" maxlength="5" mask="9*" placeholder="e.g. 2000">
+                </div>
+                <!-- <div class="col-sm-1 col-xs-6">
+                  <label>From</label>
+                  <p-calendar class="form-control"></p-calendar>
+                </div>
+                <div class="col-sm-1 col-xs-6">
+                  <label>To </label>
+                  <p-calendar class="form-control"></p-calendar>
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-3">
+              <button type="button" color="primary" mat-button mat-raised-button (click)="addAccommodationFields()">Add More</button>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <label>Hotel Description</label>
+              <textarea formControlName="description" class="form-control" cols="30" rows="10"></textarea>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-12 text-center">
+              <button type="submit"  class="btn bg-olive">Add / Update Hotel</button>
+            </div>
+          </div>
+          <alert></alert>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+<app-footer></app-footer>

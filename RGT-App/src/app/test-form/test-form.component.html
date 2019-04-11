@@ -1,0 +1,71 @@
+<section class="contents">
+  <div class="container">
+    <!-- <form [formGroup]="testForm" (submit)="showData()">
+      <div class="form-group">
+        <div *ngFor="let facl of formData; let i = index" formArrayName="mainFacility">
+          <div formGroupName="{{i}}">
+              <h4>{{facl.name}}</h4>
+              <div *ngFor="let sub of facl.sub; let fi = index" formArrayName="sub">
+                  <div formGroupName="{{fi}}">
+                      <mat-checkbox formControlName="{{sub.id}}" value="1">{{sub.name}}</mat-checkbox>
+                  </div>
+                </div>
+          </div>
+        </div>
+      </div>
+      <input type="submit" value="Show Data">
+    </form> -->
+
+    <button (click)="getFormData()">Get Data</button>
+
+    <form [formGroup]="testForm" (submit)="showData(testForm.value)">
+        <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6">
+                <input type="hidden" formControlName="formId" [(ngModel)]="formId">
+                <label for="">Extra Bed Option</label> <br>
+                <small>These are the options for beds that can be added upon request.</small> <br>
+                <mat-radio-group formControlName="extra_bed">
+                  <mat-radio-button [value]="1">Yes</mat-radio-button>
+                  <mat-radio-button [value]="2">No</mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+          </div>
+        <div class="form-group">
+          <div *ngFor="let facl of testForm.controls.mainFacility.controls; let i = index" formArrayName="mainFacility">
+            <div formGroupName="{{i}}">
+                <h4>{{facl.get('name').value}}</h4>
+                <div *ngFor="let sub of facl.get('sub').controls; let s = index" formArrayName="sub">
+                  <div formGroupName="{{s}}">
+                    <div class="col-sm-12">
+                        <div class="col-sm-4">
+                            <mat-checkbox name="{{sub.get('id').value}}" formControlName="value" (change)="sub.get('roomOpt').value=$event.checked">{{sub.get('name').value}}</mat-checkbox>
+                        </div>
+                        <div class="col-sm-5 col-sm-offset-2" *ngIf="sub.get('roomOpt').value == true">
+                          <mat-radio-group formControlName="option">
+                            <mat-radio-button checked="true" [value]="1">All Rooms</mat-radio-button>
+                            <mat-radio-button checked="false" [value]="2">Some Rooms</mat-radio-button>
+                          </mat-radio-group>
+                        </div>
+                        <div formArrayName="roomFacilities">
+                          <div class="col-sm-12 facility-room-checkbox" *ngIf="sub.get('roomOpt').value == true && sub.get('option').value == 2">
+                            <div *ngFor="let fc_room of insertedRooms; let ri = index">
+                              <div formGroupName="{{ri}}">
+                                <mat-checkbox formControlName="value">{{fc_room.room_name}}</mat-checkbox>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <input type="submit" value="Show Data">
+    </form>
+    
+    
+  </div>
+</section>

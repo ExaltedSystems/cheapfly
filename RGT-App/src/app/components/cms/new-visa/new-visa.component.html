@@ -1,0 +1,264 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      New Visa
+    </h1>
+    <small>Create New Visa</small>
+    <ol class="breadcrumb">
+      <li>
+        <a routerLink="/visa">
+          <i class="fa fa-edit"></i> Visas</a>
+      </li>
+      <li class="active">New Visa</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div #target></div>
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="box box-warning">
+          <div class="box-header with-border">
+            <h3 class="box-title">New Visa</h3>
+            <!-- <p>{{hoteldata.hotel_address}}</p> -->
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <form [formGroup]="newVisa" (submit)="addNewVisa(newVisa.value)" class="classic-form form-horizontal" enctype="multipart/form-data">
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <label>Country *</label>
+                  <select formControlName="visa_country" class="form-control chosen-select">
+                    <option value="">-- Select Country --</option>
+                    <option *ngFor="let c of countriesList" value="{{c.ID}}">{{c.name}} ({{c.code}})</option>
+                  </select>
+                  <div class="form-error" *ngIf="newVisa.controls['visa_country'].hasError('required') && newVisa.controls['visa_country'].touched">
+                    Visa Country field required
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label>URL *</label>
+                  <input type="text" formControlName="visaUrl" class="form-control">
+                  <div class="form-error" *ngIf="newVisa.controls['visaUrl'].hasError('required') && newVisa.controls['visaUrl'].touched">
+                    Please enter visa url e.g. malaysia-visa, singapore-visa
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                  <div class="col-sm-6">
+                    <label>Meta Title *</label>
+                    <input type="text" formControlName="metaTitle" class="form-control">
+                    <div class="form-error" *ngIf="newVisa.controls['metaTitle'].hasError('required') && newVisa.controls['metaTitle'].touched">
+                      Meta title field required
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <label>Meta Description *</label>
+                    <input type="text" formControlName="metaDescription" class="form-control">
+                    <div class="form-error" *ngIf="newVisa.controls['metaDescription'].hasError('required') && newVisa.controls['metaDescription'].touched">
+                      Meta description field required
+                    </div>
+                  </div>
+                </div>
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <label>Visa Type *</label>
+                  <select formControlName="visa_type" class="form-control">
+                    <option value="">-- Select Type --</option>
+                    <option *ngFor="let item of visaTypeLists" value="{{item.item_text}}">{{item.item_text}}</option>
+                  </select>
+                  <div class="form-error" *ngIf="newVisa.controls['visa_type'].hasError('required') && newVisa.controls['visa_type'].touched">
+                    Visa type field required
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label>Duration *</label>
+                  <select formControlName="visa_duration" class="form-control">
+                    <option value="">-- Select Duration --</option>
+                    <option *ngFor="let item of visaDurationsList" value="{{item.item_text}}">{{item.item_text}}</option>
+                  </select>
+                  <div class="form-error" *ngIf="newVisa.controls['visa_duration'].hasError('required') && newVisa.controls['visa_duration'].touched">
+                    Visa duration field required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <label>No of Entry *</label>
+                  <select formControlName="no_of_entry" class="form-control">
+                    <option value="">-- Select Entry --</option>
+                    <option *ngFor="let item of visaNumEntryList" value="{{item.item_text}}">{{item.item_text}}</option>
+                  </select>
+                  <div class="form-error" *ngIf="newVisa.controls['no_of_entry'].hasError('required') && newVisa.controls['no_of_entry'].touched">
+                    No. of Entry field required
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label>Validity *</label>
+                  <select formControlName="visa_validity" class="form-control">
+                    <option value="">-- Select Entry --</option>
+                    <option *ngFor="let item of visaValidityList" value="{{item.item_text}}">{{item.item_text}}</option>
+                  </select>
+                  <div class="form-error" *ngIf="newVisa.controls['visa_validity'].hasError('required') && newVisa.controls['visa_validity'].touched">
+                    Visa validaty field required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <label>Valid for Cities</label>
+                  <ng-multiselect-dropdown [placeholder]="'Select Valid Cities'" [data]="validCities" [(ngModel)]="selectedValidCities" formControlName="valid_for_cities"
+                    [settings]="dropdownSettings" (onSelect)="onValidCitySelect($event)" (onSelectAll)="onValidCitySelectAll($event)">
+                  </ng-multiselect-dropdown>
+                </div>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <label>Price *</label>
+                      <input type="text" formControlName="visa_price" class="form-control">
+                      <div class="form-error" *ngIf="newVisa.controls['visa_price'].hasError('required') && newVisa.controls['visa_price'].touched">
+                        Please enter visa price
+                      </div>
+                    </div>
+                    <div class="col-sm-7">
+                      <label>Currency *</label>
+                      <select formControlName="visa_currency" class="form-control">
+                        <option value="">-- Select Currency --</option>
+                        <option *ngFor="let item of visaCurrenciesList" value="{{item.code}}">{{item.name}}</option>
+                      </select>
+                      <div class="form-error" *ngIf="newVisa.controls['visa_currency'].hasError('required') && newVisa.controls['visa_currency'].touched">
+                        Please select currency for visa
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <label>Includes *</label>
+                  <ng-multiselect-dropdown [placeholder]="'Select Visa Includes'" [data]="visaIncludes" [(ngModel)]="selectedItems" formControlName="visa_includes"
+                    [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                  </ng-multiselect-dropdown>
+                  <div class="form-error" *ngIf="newVisa.controls['visa_includes'].hasError('required') && newVisa.controls['visa_includes'].touched">
+                    Please select atleast one includes from dropdown
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <label>Documents Required *</label>
+                  <ng-multiselect-dropdown [placeholder]="'Select Required Documents'" [data]="documentsRequired" [(ngModel)]="selectedDocuments"
+                    name="required_documents" formControlName="document_required" [settings]="dropdownSettings" (onSelect)="onDocumentSelect($event)"
+                    (onSelectAll)="onDocumentSelectAll($event)">
+                  </ng-multiselect-dropdown>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <label> Short Description *</label>
+                  <br>
+                  <textarea formControlName="shortDescription" class="form-control" ></textarea>
+                  <div class="form-error" *ngIf="newVisa.controls['shortDescription'].hasError('required') && newVisa.controls['shortDescription'].touched">
+                   short description field required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <label>Description *</label>
+                  <br>
+                  <ck-editor formControlName="description" [(ngModel)]="editorValue" skin="moono-lisa" language="en" [fullPage]="true"></ck-editor>
+                  <div class="form-error" *ngIf="newVisa.controls['description'].hasError('required') && newVisa.controls['description'].touched">
+                    description field required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <mat-checkbox formControlName="status">Status</mat-checkbox>
+                </div>
+              </div>
+              <div class="form-group text-center">
+                <button type="submit" [disabled]="newVisa.invalid" (click)="setFormType('save_submit')" class="btn bg-olive">Save & Submit</button>
+                <button type="submit" [disabled]="newVisa.invalid" (click)="setFormType('add_another');scroll(target)" color="primary" mat-button
+                  mat-raised-button>Add More Visa Type for this Country</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="box box-warning">
+          <div class="box-header with-border">
+            <h3 class="box-title">Visa Details</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <div class="upload-image" *ngIf="newVisaLastId">
+              <h4>Visa Thumbnail Image</h4>
+              <div class="classic-form">
+                <div class="form-group">
+                  <!-- <img src="{{imagePreview}}" width="100%"> -->
+                  <fancy-image-uploader [options]="thumbnailOptions" (onUpload)="onUpload($event)"></fancy-image-uploader>
+                </div>
+              </div>
+            </div>
+            <h4>Visa Types</h4>
+            <table class="table">
+              <tr>
+                <th>s#</th>
+                <th>Type</th>
+                <th>Duration</th>
+                <th>Price</th>
+                <th>&nbsp;</th>
+              </tr>
+              <tr *ngFor="let tdData of visaDetailsTblData;let i=index">
+                <td>{{ i+1 }}</td>
+                <td>{{ tdData.visaTypeId }}</td>
+                <td>{{ tdData.durationId }}</td>
+                <td>{{ tdData.visaPrice }}</td>
+                <td>
+                  <a (click)="getVisaDetailsForUpdt(tdData.visaDetailId)">
+                    <mat-icon class="text-primary"> Edit</mat-icon>
+                  </a>
+                  <a (click)="getVisaDetailsForUpdt(tdData.visaDetailId)">
+                    <mat-icon class="text-danger"> Close</mat-icon>
+                  </a>
+                </td>
+              </tr>
+            </table>
+            <br>
+            <h4>Selected Includes Options</h4>
+            <ul>
+              <li *ngFor="let item of selectedItems">{{item.item_text}}</li>
+            </ul>
+            <br>
+            <h4>Selected Document Requirements</h4>
+            <ul>
+              <li *ngFor="let item of selectedDocuments">{{item.item_text}}</li>
+            </ul>
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /.content -->
+</div>
+<!-- CK Editor -->
+<script src="../../../../assets/js/ckeditor.js"></script>
+<script>
+  $(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    // CKEDITOR.replace('editor1')
+    CKEDITOR.replace('')
+  })
+</script>
+<app-footer></app-footer>

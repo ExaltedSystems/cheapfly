@@ -1,0 +1,1302 @@
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        New Property
+        <small>Register New Property</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">New Property</li>
+      </ol>
+      <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
+        <mat-step [stepControl]="firstFormGroup">
+          <form [formGroup]="firstFormGroup" class="classic-form">
+            <ng-template matStepLabel>Basic Info</ng-template>
+            <div class="row">
+              <div class="col-sm-8">
+                <div class="setup-content" id="step-1">
+                  <div class="box box-warning">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">What do you want to list?</h3>
+                    </div>
+                    <!-- /.box-header -->
+                      <div class="box-body">
+                        <!-- text input -->
+                        <div class="form-group">
+                          <label>Which property type below best describes your property?</label>
+                          <select class="form-control">
+                            <option value="0" data-labeltrans="Total number of rooms" class="hidden">
+                              Please select
+                            </option>
+                            <optgroup label="Frequently selected types in your area">
+                              <option value="201" data-labeltrans="Total number of apartments" data-is-bh-type="1" title="Furnished, independent accommodations available for short- and long-term rental">
+                                Apartment
+                              </option>
+                              <option value="204" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Accommodations for travelers often with restaurants, meeting rooms and other guest services">
+                                Hotel
+                              </option>
+                              <option value="220" data-labeltrans="Total number of vacation homes" data-is-bh-type="1" title="Freestanding home with private, external entrance and rented specifically for vacation">
+                                Vacation home
+                              </option>
+                              <option value="216" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Private home with separate living facilities for host and guest">
+                                Guesthouse
+                              </option>
+                              <option value="208" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Private home offering overnight stays and breakfast">
+                                Bed and breakfast
+                              </option>
+                            </optgroup>
+                            <optgroup class="accommodation-type_separator" label="───────────────">
+                              <option value="223" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Private home in the countryside with simple accommodations">
+                                Country House
+                              </option>
+                              <option value="222" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Private home with shared living facilities for host and guest">
+                                Homestay
+                              </option>
+                              <option value="210" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Private farm with simple accommodations">
+                                Farm stay
+                              </option>
+                              <option value="221" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Private home with accommodations surrounded by nature, such as a forest or mountains">
+                                Lodge
+                              </option>
+                              <option value="213" data-labeltrans="Total number of villas" data-is-bh-type="1" title="Private, freestanding and independent home with a luxury feel">
+                                Villa
+                              </option>
+                              <option value="228" data-labeltrans="Total number of rooms" data-is-bh-type="1" title="Freestanding home characterized by a sloping roof and rented specifically for vacations">
+                                Chalet
+                              </option>
+                              <option value="203" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Budget accommodations with mostly dorm-style beds and social atmosphere">
+                                Hostel
+                              </option>
+                              <option value="205" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Roadside hotel usually for motorists, with direct access to parking and fewer amenities">
+                                Motel
+                              </option>
+                              <option value="218" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Small property with basic accommodations and a rustic feel">
+                                Inn
+                              </option>
+                              <option value="225" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Extremely small units or capsules offering cheap and basic overnight accommodations">
+                                Capsule Hotel
+                              </option>
+                              <option value="219" data-labeltrans="Total number of apartments" data-is-bh-type="1" title="Independent apartments with some hotel facilities like a front desk">
+                                Condo hotel
+                              </option>
+                              <option value="206" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="A place for relaxation with on-site restaurants, activities and often a luxury feel">
+                                Resort
+                              </option>
+                              <option value="212" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Private independent residences located on shared grounds with shared facilities or recreational activities">
+                                Resort village
+                              </option>
+                              <option value="214" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Accommodations offering cabins or bungalows alongside areas for camping or campers, with shared facilities or recreational activities">
+                                Campground
+                              </option>
+                              <option value="224" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Tents with fixed beds and some services, located in natural surroundings">
+                                Luxury Tent
+                              </option>
+                              <option value="227" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Traditional Moroccan accommodations with a courtyard and luxury feel">
+                                Riad
+                              </option>
+                              <option value="209" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Traditional Japanese-style accommodations with meal options">
+                                Ryokan
+                              </option>
+                              <option value="226" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Adult-only accommodations rented by the hour or night">
+                                Love Hotel
+                              </option>
+                              <option value="215" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Commercial travel accommodations located on a boat">
+                                Boat
+                              </option>
+                              <option value="231" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="">
+                                Economy hotel
+                              </option>
+                            </optgroup>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label>What's the name of your property?</label>
+                          <input type="text" class="form-control" placeholder="Enter ...">
+                          <small>Guests will see this name when they search for a place to stay.</small>
+                        </div>
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-sm-4">
+                              <label>Total number of rooms</label>
+                              <input type="text" class="form-control" placeholder="Enter ...">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <!-- /.box-body -->
+                  </div>
+                  <div class="box box-warning">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">What are the contact details for this property?</h3>
+                    </div>
+                    <!-- /.box-header -->
+                      <div class="box-body">
+                        <!-- text input -->
+                        <div class="form-group">
+                          <label>Contact Name</label>
+                          <input type="text" class="form-control" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                          <label>Contact number (so we can assist with your registration when needed)</label>
+                          <div class="row">
+                            <div class="col-sm-6 phone-input-group">
+                              <select name="" id="" class="form-control" style="width: 20%; display: inline; float: left;">
+                                <option value="">+92</option>
+                                <option value="">+97</option>
+                              </select>
+                              <input type="text" class="form-control" placeholder="Enter ..." style="width: 80%; display: inline; float: left;">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-sm-4">
+                              <label>Total number of rooms</label>
+                              <input type="text" class="form-control" placeholder="Enter ...">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <!-- /.box-body -->
+                  </div>
+                  <div class="box box-warning">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Where's your property located?</h3>
+                    </div>
+                    <!-- /.box-header -->
+                      <div class="box-body">
+                        <!-- text input -->
+                        <div class="form-group">
+                          <label>Street address</label>
+                          <input type="text" class="form-control" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                          <label>Country/Region</label>
+                          <input type="text" class="form-control" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                          <label>City</label>
+                          <input type="text" class="form-control" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-sm-4">
+                              <label>ZIP Code</label>
+                              <input type="text" class="form-control" placeholder="Enter ...">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <!-- /.box-body -->
+                  </div>
+                  <button mat-button matStepperNext class="bg-olive">Next</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup">
+          <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Property Details</ng-template>
+            <input type="text" class="form-control" formControlName="secondCtrl" required>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="thirdFormGroup">
+          <form [formGroup]="thirdFormGroup">
+            <ng-template matStepLabel>other Details</ng-template>
+            <input type="text" class="form-control" formControlName="thirdCtrl" required>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Rooms Details</ng-template>
+          You are now done.
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </section>
+
+    
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="stepwizard">
+        <div class="stepwizard-row setup-panel">
+          <div class="stepwizard-step">
+            <a href="#step-1" type="button" class="btn bg-olive btn-primary btn-circle">1</a>
+            <p>Basic Info</p>
+          </div>
+          <div class="stepwizard-step">
+            <a href="#step-2" type="button" class="btn bg-olive btn-default btn-circle" disabled>2</a>
+            <p>Property Details</p>
+          </div>
+          <div class="stepwizard-step">
+            <a href="#step-3" type="button" class="btn bg-olive btn-default btn-circle" disabled>3</a>
+            <p>Rooms Details</p>
+          </div>
+          <div class="stepwizard-step">
+            <a href="#step-4" type="button" class="btn bg-olive btn-default btn-circle" disabled>4</a>
+            <p>Amenities</p>
+          </div>
+          <div class="stepwizard-step">
+            <a href="#step-5" type="button" class="btn bg-olive btn-default btn-circle" disabled>5</a>
+            <p>Photos</p>
+          </div>
+          <div class="stepwizard-step">
+            <a href="#step-6" type="button" class="btn bg-olive btn-default btn-circle" disabled>6</a>
+            <p>Policies</p>
+          </div>
+          <div class="stepwizard-step">
+            <a href="#step-7" type="button" class="btn bg-olive btn-default btn-circle" disabled>7</a>
+            <p>Payments</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <form role="form" class="classic-form">
+            <div class="setup-content" id="step-1">
+              <div class="box box-warning">
+                <div class="box-header with-border">
+                  <h3 class="box-title">What do you want to list?</h3>
+                </div>
+                <!-- /.box-header -->
+                  <div class="box-body">
+                    <!-- text input -->
+                    <div class="form-group">
+                      <label>Which property type below best describes your property?</label>
+                      <select class="form-control">
+                        <option value="0" data-labeltrans="Total number of rooms" class="hidden">
+                          Please select
+                        </option>
+                        <optgroup label="Frequently selected types in your area">
+                          <option value="201" data-labeltrans="Total number of apartments" data-is-bh-type="1" title="Furnished, independent accommodations available for short- and long-term rental">
+                            Apartment
+                          </option>
+                          <option value="204" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Accommodations for travelers often with restaurants, meeting rooms and other guest services">
+                            Hotel
+                          </option>
+                          <option value="220" data-labeltrans="Total number of vacation homes" data-is-bh-type="1" title="Freestanding home with private, external entrance and rented specifically for vacation">
+                            Vacation home
+                          </option>
+                          <option value="216" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Private home with separate living facilities for host and guest">
+                            Guesthouse
+                          </option>
+                          <option value="208" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Private home offering overnight stays and breakfast">
+                            Bed and breakfast
+                          </option>
+                        </optgroup>
+                        <optgroup class="accommodation-type_separator" label="───────────────">
+                          <option value="223" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Private home in the countryside with simple accommodations">
+                            Country House
+                          </option>
+                          <option value="222" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Private home with shared living facilities for host and guest">
+                            Homestay
+                          </option>
+                          <option value="210" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Private farm with simple accommodations">
+                            Farm stay
+                          </option>
+                          <option value="221" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Private home with accommodations surrounded by nature, such as a forest or mountains">
+                            Lodge
+                          </option>
+                          <option value="213" data-labeltrans="Total number of villas" data-is-bh-type="1" title="Private, freestanding and independent home with a luxury feel">
+                            Villa
+                          </option>
+                          <option value="228" data-labeltrans="Total number of rooms" data-is-bh-type="1" title="Freestanding home characterized by a sloping roof and rented specifically for vacations">
+                            Chalet
+                          </option>
+                          <option value="203" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Budget accommodations with mostly dorm-style beds and social atmosphere">
+                            Hostel
+                          </option>
+                          <option value="205" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Roadside hotel usually for motorists, with direct access to parking and fewer amenities">
+                            Motel
+                          </option>
+                          <option value="218" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Small property with basic accommodations and a rustic feel">
+                            Inn
+                          </option>
+                          <option value="225" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Extremely small units or capsules offering cheap and basic overnight accommodations">
+                            Capsule Hotel
+                          </option>
+                          <option value="219" data-labeltrans="Total number of apartments" data-is-bh-type="1" title="Independent apartments with some hotel facilities like a front desk">
+                            Condo hotel
+                          </option>
+                          <option value="206" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="A place for relaxation with on-site restaurants, activities and often a luxury feel">
+                            Resort
+                          </option>
+                          <option value="212" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Private independent residences located on shared grounds with shared facilities or recreational activities">
+                            Resort village
+                          </option>
+                          <option value="214" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Accommodations offering cabins or bungalows alongside areas for camping or campers, with shared facilities or recreational activities">
+                            Campground
+                          </option>
+                          <option value="224" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Tents with fixed beds and some services, located in natural surroundings">
+                            Luxury Tent
+                          </option>
+                          <option value="227" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Traditional Moroccan accommodations with a courtyard and luxury feel">
+                            Riad
+                          </option>
+                          <option value="209" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Traditional Japanese-style accommodations with meal options">
+                            Ryokan
+                          </option>
+                          <option value="226" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Adult-only accommodations rented by the hour or night">
+                            Love Hotel
+                          </option>
+                          <option value="215" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="Commercial travel accommodations located on a boat">
+                            Boat
+                          </option>
+                          <option value="231" data-labeltrans="Total number of rooms" data-is-bh-type="0" title="">
+                            Economy hotel
+                          </option>
+                        </optgroup>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>What's the name of your property?</label>
+                      <input type="text" class="form-control" placeholder="Enter ...">
+                      <small>Guests will see this name when they search for a place to stay.</small>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <label>Total number of rooms</label>
+                          <input type="text" class="form-control" placeholder="Enter ...">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <!-- /.box-body -->
+              </div>
+              <div class="box box-warning">
+                <div class="box-header with-border">
+                  <h3 class="box-title">What are the contact details for this property?</h3>
+                </div>
+                <!-- /.box-header -->
+                  <div class="box-body">
+                    <!-- text input -->
+                    <div class="form-group">
+                      <label>Contact Name</label>
+                      <input type="text" class="form-control" placeholder="Enter ...">
+                    </div>
+                    <div class="form-group">
+                      <label>Contact number (so we can assist with your registration when needed)</label>
+                      <div class="row">
+                        <div class="col-sm-6 phone-input-group">
+                          <select name="" id="" class="form-control" style="width: 20%; display: inline; float: left;">
+                            <option value="">+92</option>
+                            <option value="">+97</option>
+                          </select>
+                          <input type="text" class="form-control" placeholder="Enter ..." style="width: 80%; display: inline; float: left;">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <label>Total number of rooms</label>
+                          <input type="text" class="form-control" placeholder="Enter ...">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <!-- /.box-body -->
+              </div>
+              <div class="box box-warning">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Where's your property located?</h3>
+                </div>
+                <!-- /.box-header -->
+                  <div class="box-body">
+                    <!-- text input -->
+                    <div class="form-group">
+                      <label>Street address</label>
+                      <input type="text" class="form-control" placeholder="Enter ...">
+                    </div>
+                    <div class="form-group">
+                      <label>Country/Region</label>
+                      <input type="text" class="form-control" placeholder="Enter ...">
+                    </div>
+                    <div class="form-group">
+                      <label>City</label>
+                      <input type="text" class="form-control" placeholder="Enter ...">
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <label>ZIP Code</label>
+                          <input type="text" class="form-control" placeholder="Enter ...">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <!-- /.box-body -->
+              </div>
+              <button type="button" class="btn bg-olive btn-block nextBtn">Continue</button>
+            </div>
+            <!-- / #step-1 -->
+            <div class="setup-content" id="step-2">
+              <div class="box box-warning">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Property details</h3> <br>
+                  <small>Now let us know some general details about your property like facilities available, internet, parking, and the languages you speak.</small>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <!-- text input -->
+                  <div class="form-group">
+                    <label>Internet (Is internet available to guests?)</label> <br>
+                    <small>Internet access is important for many travelers. Free Wi-Fi is a huge selling point, too!</small>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <select name="" id="" class="form-control">
+                          <option value="">Select</option>
+                          <option value="">No</option>
+                          <option value="">Yes, Free</option>
+                          <option value="">Yes, Paid</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <label for="">What type of internet?</label>
+                        <select name="" id="" class="form-control">
+                          <option value="">WiFi</option>
+                          <option value="">Cable</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-4">
+                        <label for="">What type of internet?</label>
+                        <select name="" id="" class="form-control">
+                          <option value="">Public Area</option>
+                          <option value="">Some Rooms</option>
+                          <option value="">All Rooms</option>
+                          <option value="">Entire Property</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-4">
+                        <label for="">Price for internet (per day)</label>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- / .box-body -->
+              </div>
+              <div class="box box-warning">
+                <div class="box-body">
+                  <div class="form-group">
+                    <label>Parking (Is parking available to guests?)</label> <br>
+                    <small>This information is especially important for those traveling to your property by car.</small>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <select name="" id="" class="form-control">
+                          <option value="">Select</option>
+                          <option value="">No</option>
+                          <option value="">Yes, Free</option>
+                          <option value="">Yes, Paid</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3">
+                        <select name="" id="" class="form-control">
+                          <option value="">Private</option>
+                          <option value="">Public</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3">
+                        <select name="" id="" class="form-control">
+                          <option value="">On Site</option>
+                          <option value="">Off Site</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6">
+                      <label>Do guests need to reserve a parking space?</label>
+                        <select name="" id="" class="form-control">
+                          <option value="">Reservation Needed</option>
+                          <option value="">No reservation needed</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-6">
+                        <label for="">Price for parking (per day)</label>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- / .box-body -->
+              </div>
+              <div class="box box-warning">
+                <div class="box-body">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <label>Breakfast (Is breakfast available to guests?)</label> <br>
+                        <select name="" id="" class="form-control">
+                          <option value="">Select</option>
+                          <option value="">No</option>
+                          <option value="">Yes, Included in Price</option>
+                          <option value="">Yes, It's Optional</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-6">
+                        <label for="">Price for Breakfast (per person,per day)</label>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <label for="">What kind of breakfast is available?</label>
+                        <select name="" id="" class="form-control">
+                          <option value="">Please select</option>
+                          <option value="1">Continental</option>
+                          <option value="10">American</option>
+                          <option value="11">Buffet</option>
+                          <option value="12">À la carte</option>
+                          <option value="2">Italian</option>
+                          <option value="3">Full English/Irish</option>
+                          <option value="4">Vegetarian</option>
+                          <option value="5">Vegan</option>
+                          <option value="6">Halal</option>
+                          <option value="7">Gluten-free</option>
+                          <option value="8">Kosher</option>
+                          <option value="9">Asian</option>
+                        </select>
+                      </div>
+                    </div>
+                    <a href=""><span class="fa fa-plus-circle"></span> Add More</a>
+                  </div>
+                </div>
+                <!-- / .box-body -->
+              </div>
+              <div class="box box-warning">
+                <div class="box-body">
+                  <div class="form-group">
+                    <label>Languages Spoken by Your Staff</label> <br>
+                    <small>Select the language(s) in which you or your staff can help guests.</small>
+                    <select name="" id="" class="form-control">
+                      <option value="">Select</option>
+                      <option value="">English</option>
+                    </select>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <div class="box box-warning">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Popular facilities, activities and services provided on site</h3> <br>
+                  <small>We listed the options most frequently selected for properties like yours here. You can always change your options or add more on your property dashboard after you've signed up.</small>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <!-- text input -->
+                  <div class="">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox"> 24-Hour Front Desk
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-2">
+                        <select name="" id="" class="form-control">
+                          <option value="">Select</option>
+                          <option value="">Yes, Free</option>
+                          <option value="">Yes, Paid</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox"> Grocery Deliveries
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-2">
+                        <select name="" id="" class="form-control">
+                          <option value="">Select</option>
+                          <option value="">Yes, Free</option>
+                          <option value="">Yes, Paid</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox"> 24-Hour Front Desk
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-2">
+                        <select name="" id="" class="form-control">
+                          <option value="">Select</option>
+                          <option value="">Yes, Free</option>
+                          <option value="">Yes, Paid</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox"> Grocery Deliveries
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-2">
+                        <select name="" id="" class="form-control">
+                          <option value="">Select</option>
+                          <option value="">Yes, Free</option>
+                          <option value="">Yes, Paid</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <button type="button" class="btn bg-olive btn-block nextBtn">Continue</button>
+            </div>
+            <!-- / #step-2 -->
+            <div class="setup-content" id="step-3">
+              <div class="box box-warning">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Room Details</h3> <br>
+                  <small>Tell us about your first room. After that's done you can fill in the details of your other rooms.</small>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <!-- text input -->
+                  <div class="form-group">
+                    <label>Room Type</label> <br>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <select name="" id="" class="form-control">
+                          <option value="" data-roomtype-label="Room type" data-roomnumber-label="Number of rooms (of this type)">Please select</option>
+                          <option value="10" data-roomtype-label="Room type" data-roomname-label="Room name" data-roomnumber-label="Number of rooms (of this type)">Single Room</option>
+                          <option value="9" data-roomtype-label="Room type" data-roomname-label="Room name" data-roomnumber-label="Number of rooms (of this type)">Double Room</option>
+                          <option value="8" data-roomtype-label="Room type" data-roomname-label="Room name" data-roomnumber-label="Number of rooms (of this type)">Twin</option>
+                          <option value="24" data-roomtype-label="Room type" data-roomname-label="Room name" data-roomnumber-label="Number of rooms (of this type)">Twin/Double</option>
+                          <option value="7" data-roomtype-label="Room type" data-roomname-label="Room name" data-roomnumber-label="Number of rooms (of this type)">Triple Room</option>
+                          <option value="4" data-roomtype-label="Room type" data-roomname-label="Room name" data-roomnumber-label="Number of rooms (of this type)">Quadruple</option>
+                          <option value="13" data-roomtype-label="Room type" data-roomname-label="Room name" data-roomnumber-label="Number of rooms (of this type)">Family</option>
+                          <option value="5" data-roomtype-label="Room type" data-roomname-label="Room name" data-roomnumber-label="Number of rooms (of this type)">Suite</option>
+                          <option value="12" data-roomtype-label="Room type" data-roomname-label="Room name" data-roomnumber-label="Number of rooms (of this type)">Studio</option>
+                          <option value="1" data-roomtype-label="Apartment type" data-roomname-label="Apartment name" data-roomnumber-label="Number of apartments (of this type)">Apartment</option>
+                          <option value="25" data-roomtype-label="Room type" data-roomname-label="Room name" data-roomnumber-label="Number of rooms (of this type)">Dorm Room</option>
+                          <option value="26" data-roomtype-label="Room type" data-roomname-label="Room name" data-roomnumber-label="Number of rooms (of this type)">Bed in Dorm Room</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <label for="">Room Name</label>
+                        <select name="" id="" class="form-control">
+                          <option value="" class="hidden">Please select</option><option value="71">Budget Twin Room</option><option value="205910">Deluxe Double Room with Two Double Beds</option><option value="204583">Deluxe Queen Room with Two Queen Beds</option><option value="374">Deluxe Twin Room</option><option value="377">Deluxe Twin Room with Sea View</option><option value="204207">Double Room with Two Double Beds</option><option value="580">Economy Twin Room</option><option value="210819">King Room with Two King Beds</option><option value="15931">Large Twin Room</option><option value="4905">Queen Room with Two Queen Beds</option><option value="219296">Queen Room with Two Queen Beds - Disability Access</option><option value="6325">Small Twin Room</option><option value="205835">Standard Double Room with Two Double Beds</option><option value="205884">Standard Queen Room with Two Queen Beds</option><option value="1166">Standard Twin Room</option><option value="199746">Standard Twin Room with Garden View</option><option value="192463">Standard Twin Room with Mountain View</option><option value="1173">Standard Twin Room with Sea View</option><option value="79965">Standard Twin Room with Shared Bathroom</option><option value="1586">Standard Twin Room with Sofa</option><option value="77078">Superior Double Room with Two Double Beds</option><option value="213177">Superior King or Twin Room</option><option value="206246">Superior Queen Room with Two Queen Beds</option><option value="1356">Superior Twin Room</option><option value="199810">Superior Twin Room with City View</option><option value="155600">Superior Twin Room with Garden View</option><option value="155153">Superior Twin Room with Sauna</option><option value="1365">Superior Twin Room with Sea View</option><option value="1421">Twin Room</option><option value="183294">Twin Room - Disability Access</option><option value="1431">Twin Room with Balcony</option><option value="1432">Twin Room with Bath</option><option value="1419">Twin Room with Bathroom</option><option value="18843">Twin Room with City View</option><option value="1434">Twin Room with Extra Bed</option><option value="1436">Twin Room with Garden View</option><option value="78356">Twin Room with Lake View</option><option value="47874">Twin Room with Mountain View</option><option value="1440">Twin Room with Pool View</option><option value="6972">Twin Room with Private Bathroom</option><option value="144822">Twin Room with Private External Bathroom</option><option value="1442">Twin Room with Sea View</option><option value="1443">Twin Room with Shared Bathroom</option><option value="10277">Twin Room with Shared Toilet</option><option value="1444">Twin Room with Shower</option><option value="1445">Twin Room with Terrace</option><option value="8658">Twin Room with View</option>
+                        </select>
+                        <small>This is the name guests will see on the Booking.com website.</small>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <label for="">Number of (rooms of this type)</label>
+                        <select name="" id="" class="form-control">
+                          <option value="">01</option>
+                          <option value="">02</option>
+                        </select>
+                        <small>Out of 50 rooms at your property</small>
+                      </div>
+                      <div class="col-sm-6">
+                        <label for="">Smooking Policy</label>
+                        <select name="" id="" class="form-control">
+                          <option value="">I have both smookin gna dnon-smooking options</option>
+                          <option value="">02</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- / .box-body -->
+              </div>
+              <div class="box box-warning">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Base price per night</h3> <br>
+                  <small>This is the lowest price that we automatically apply to this room for all dates. Before your property goes live, you can set seasonal pricing on your property dashboard.</small>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <!-- text input -->
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <label for="">Price for 1 person</label>
+                        <div class="input-group">
+                          <span class="input-group-addon">PKR / Per night</span>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- / .box-body -->
+              </div>
+              <button type="button" class="btn bg-olive btn-block nextBtn">Continue</button>
+            </div>
+            <!-- / #step-3 -->
+            <div class="setup-content" id="step-4">
+              <div class="box box-warning">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Amenities</h3> <br>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <!-- text input -->
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <label for="">Extra Bed Option</label> <br>
+                        <small>These are the options for beds that can be added upon request.</small>
+                        <div class="radio">
+                          <label for=""><input type="radio"> Yes</label>
+                          <label for=""><input type="radio"> No</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- / .box-body -->
+              </div>
+              <div class="box box-warning">
+                <div class="box-header with-border">
+                  <h3 class="box-title">General Amenities</h3> <br>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Clothes rack</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Drying rack for clothing</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Fold-up bed</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Air conditioning</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Wardrobe/Closet</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Carpeted</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Walk-in closet</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Extra long beds (> 6.5 ft)</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- / .box-body -->
+              </div>
+              <div class="box box-warning">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Bathroom</h3> <br>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Toilet paper</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Toilet With Grab Rails</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Bathtub</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Bidet</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Bathrobe</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Free toiletries</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Hairdryer</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Spa tub</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- / .box-body -->
+              </div>
+              <div class="box box-warning">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Media & Technology</h3> <br>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Computer</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Game console</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Game console - Nintendo Wii</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Game console - PS2</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Game console - Xbox 360</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Laptop</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> iPad</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Cable channels</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- / .box-body -->
+              </div>
+              <div class="box box-warning">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Food & Drink</h3> <br>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Dining area</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Dining table</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Barbecue</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Stovetop</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Toaster</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Electric kettle</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Outdoor dining area</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkbox">
+                          <label for=""><input type="checkbox"> Outdoor furniture</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- / .box-body -->
+              </div>
+              <button type="button" class="btn bg-olive btn-block nextBtn">Continue</button>
+            </div>
+            <!-- / #step-4 -->
+            <div class="setup-content" id="step-5">
+              <div class="box box-warning">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Photos</h3> <br>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <!-- text input -->
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <div class="thumbnail">
+                          <img src="../../dist/img/placeholder.png" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- / .box-body -->
+              </div>
+              <button type="button" class="btn bg-olive btn-block nextBtn">Continue</button>
+            </div>
+            <!-- / #step-5 -->
+            <div class="setup-content" id="step-6">
+              <div class="box box-warning">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Policies</h3> <br>
+                  <small>Specify some basic policies. Do you allow children or pets? How flexible are you with cancellations?</small>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <!-- text input -->
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <label for="">Cancellation Policy</label> <br>
+                        <small>How many days in advance can guests cancel free of charge?</small>
+                        <select name="" id="" class="form-control">
+                          <option value="0">Day of arrival (6 pm)</option>
+                          <option value="1">1 day</option>
+                          <option value="2">2 days</option>
+                          <option value="3">3 days</option>
+                          <option value="7">7 days</option>
+                          <option value="14">14 days</option>
+                        </select>
+                        <small>or guests will pay 100%</small>
+                        <select name="" id="" class="form-control">
+                          <option value="first_night">of the first night</option>
+                          <option value="full_stay">of the full stay</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="alert alert-warning">
+                      <p><span class="fa fa-bell"></span> The guest must cancel 2 days in advance or pay 100% of the price of the whole stay.</p>
+                      <small>You'll be able to make changes to your policies later on – this is just to get you started.</small>
+                    </div>
+                  </div>
+                </div>
+                <!-- / .box-body -->
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="box box-warning">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Check In</h3> <br>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                      <!-- text input -->
+                      <div class="form-group">
+                        <div class="col-sm-5">
+                          <label for="">From</label>
+                          <select name="" id="" class="form-control">
+                            <option value="07:00">7:00&nbsp;AM</option>
+                            <option value="07:30">7:30&nbsp;AM</option>
+                            <option value="08:00">8:00&nbsp;AM</option>
+                            <option value="08:30">8:30&nbsp;AM</option>
+                            <option value="09:00">9:00&nbsp;AM</option>
+                            <option value="09:30">9:30&nbsp;AM</option>
+                            <option value="10:00">10:00&nbsp;AM</option>
+                            <option value="10:30">10:30&nbsp;AM</option>
+                            <option value="11:00">11:00&nbsp;AM</option>
+                            <option value="11:30">11:30&nbsp;AM</option>
+                            <option value="12:00">12:00&nbsp;PM</option>
+                            <option value="12:30">12:30&nbsp;PM</option>
+                            <option value="13:00">1:00&nbsp;PM</option>
+                            <option value="13:30">1:30&nbsp;PM</option>
+                            <option value="14:00">2:00&nbsp;PM</option>
+                            <option value="14:30">2:30&nbsp;PM</option>
+                            <option value="15:00">3:00&nbsp;PM</option>
+                            <option value="15:30">3:30&nbsp;PM</option>
+                            <option value="16:00">4:00&nbsp;PM</option>
+                            <option value="16:30">4:30&nbsp;PM</option>
+                            <option value="17:00">5:00&nbsp;PM</option>
+                            <option value="17:30">5:30&nbsp;PM</option>
+                            <option value="18:00">6:00&nbsp;PM</option>
+                            <option value="18:30">6:30&nbsp;PM</option>
+                            <option value="19:00">7:00&nbsp;PM</option>
+                            <option value="19:30">7:30&nbsp;PM</option>
+                            <option value="20:00">8:00&nbsp;PM</option>
+                          </select>
+                        </div>
+                        <div class="col-sm-5">
+                          <label for="">To</label>
+                          <select name="" id="" class="form-control">
+                            <option value="07:00">7:00&nbsp;AM</option>
+                            <option value="07:30">7:30&nbsp;AM</option>
+                            <option value="08:00">8:00&nbsp;AM</option>
+                            <option value="08:30">8:30&nbsp;AM</option>
+                            <option value="09:00">9:00&nbsp;AM</option>
+                            <option value="09:30">9:30&nbsp;AM</option>
+                            <option value="10:00">10:00&nbsp;AM</option>
+                            <option value="10:30">10:30&nbsp;AM</option>
+                            <option value="11:00">11:00&nbsp;AM</option>
+                            <option value="11:30">11:30&nbsp;AM</option>
+                            <option value="12:00">12:00&nbsp;PM</option>
+                            <option value="12:30">12:30&nbsp;PM</option>
+                            <option value="13:00">1:00&nbsp;PM</option>
+                            <option value="13:30">1:30&nbsp;PM</option>
+                            <option value="14:00">2:00&nbsp;PM</option>
+                            <option value="14:30">2:30&nbsp;PM</option>
+                            <option value="15:00">3:00&nbsp;PM</option>
+                            <option value="15:30">3:30&nbsp;PM</option>
+                            <option value="16:00">4:00&nbsp;PM</option>
+                            <option value="16:30">4:30&nbsp;PM</option>
+                            <option value="17:00">5:00&nbsp;PM</option>
+                            <option value="17:30">5:30&nbsp;PM</option>
+                            <option value="18:00">6:00&nbsp;PM</option>
+                            <option value="18:30">6:30&nbsp;PM</option>
+                            <option value="19:00">7:00&nbsp;PM</option>
+                            <option value="19:30">7:30&nbsp;PM</option>
+                            <option value="20:00">8:00&nbsp;PM</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- / .box-body -->
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="box box-warning">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Check Out</h3> <br>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                      <!-- text input -->
+                      <div class="form-group">
+                        <div class="col-sm-5">
+                          <label for="">From</label>
+                          <select name="" id="" class="form-control">
+                            <option value="07:00">7:00&nbsp;AM</option>
+                            <option value="07:30">7:30&nbsp;AM</option>
+                            <option value="08:00">8:00&nbsp;AM</option>
+                            <option value="08:30">8:30&nbsp;AM</option>
+                            <option value="09:00">9:00&nbsp;AM</option>
+                            <option value="09:30">9:30&nbsp;AM</option>
+                            <option value="10:00">10:00&nbsp;AM</option>
+                            <option value="10:30">10:30&nbsp;AM</option>
+                            <option value="11:00">11:00&nbsp;AM</option>
+                            <option value="11:30">11:30&nbsp;AM</option>
+                            <option value="12:00">12:00&nbsp;PM</option>
+                            <option value="12:30">12:30&nbsp;PM</option>
+                            <option value="13:00">1:00&nbsp;PM</option>
+                            <option value="13:30">1:30&nbsp;PM</option>
+                            <option value="14:00">2:00&nbsp;PM</option>
+                            <option value="14:30">2:30&nbsp;PM</option>
+                            <option value="15:00">3:00&nbsp;PM</option>
+                            <option value="15:30">3:30&nbsp;PM</option>
+                            <option value="16:00">4:00&nbsp;PM</option>
+                            <option value="16:30">4:30&nbsp;PM</option>
+                            <option value="17:00">5:00&nbsp;PM</option>
+                            <option value="17:30">5:30&nbsp;PM</option>
+                            <option value="18:00">6:00&nbsp;PM</option>
+                            <option value="18:30">6:30&nbsp;PM</option>
+                            <option value="19:00">7:00&nbsp;PM</option>
+                            <option value="19:30">7:30&nbsp;PM</option>
+                            <option value="20:00">8:00&nbsp;PM</option>
+                          </select>
+                        </div>
+                        <div class="col-sm-5">
+                          <label for="">To</label>
+                          <select name="" id="" class="form-control">
+                            <option value="07:00">7:00&nbsp;AM</option>
+                            <option value="07:30">7:30&nbsp;AM</option>
+                            <option value="08:00">8:00&nbsp;AM</option>
+                            <option value="08:30">8:30&nbsp;AM</option>
+                            <option value="09:00">9:00&nbsp;AM</option>
+                            <option value="09:30">9:30&nbsp;AM</option>
+                            <option value="10:00">10:00&nbsp;AM</option>
+                            <option value="10:30">10:30&nbsp;AM</option>
+                            <option value="11:00">11:00&nbsp;AM</option>
+                            <option value="11:30">11:30&nbsp;AM</option>
+                            <option value="12:00">12:00&nbsp;PM</option>
+                            <option value="12:30">12:30&nbsp;PM</option>
+                            <option value="13:00">1:00&nbsp;PM</option>
+                            <option value="13:30">1:30&nbsp;PM</option>
+                            <option value="14:00">2:00&nbsp;PM</option>
+                            <option value="14:30">2:30&nbsp;PM</option>
+                            <option value="15:00">3:00&nbsp;PM</option>
+                            <option value="15:30">3:30&nbsp;PM</option>
+                            <option value="16:00">4:00&nbsp;PM</option>
+                            <option value="16:30">4:30&nbsp;PM</option>
+                            <option value="17:00">5:00&nbsp;PM</option>
+                            <option value="17:30">5:30&nbsp;PM</option>
+                            <option value="18:00">6:00&nbsp;PM</option>
+                            <option value="18:30">6:30&nbsp;PM</option>
+                            <option value="19:00">7:00&nbsp;PM</option>
+                            <option value="19:30">7:30&nbsp;PM</option>
+                            <option value="20:00">8:00&nbsp;PM</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- / .box-body -->
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn bg-olive btn-block nextBtn">Continue</button>
+            </div>
+            <!-- / #step-6 -->
+            <div class="setup-content" id="step-7">
+              <div class="box box-warning">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Payments</h3> <br>
+                  <small>This is the last section of info for listing your property! Specify the payment types you accept, tax details, and other options like cancellation policies.</small>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <!-- text input -->
+                  <div class="form-group">
+                    <h3>Guest Payment Options</h3>
+                    <label for="">Can you charge credit cards at the property?</label>
+                    <div class="checkbox">
+                      <label for=""><input type="checkbox" checked="checked"> Yes</label>
+                      <label for=""><input type="checkbox"> No</label>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="checkbox">
+                          <label for="">
+                            <input type="checkbox">
+                            <img src="../../dist/img/credit/american-express.png" alt=""> American Express
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="checkbox">
+                          <label for="">
+                            <input type="checkbox">
+                            <img src="../../dist/img/credit/mastercard.png" alt=""> Master Card
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="checkbox">
+                          <label for="">
+                            <input type="checkbox">
+                            <img src="../../dist/img/credit/visa.png" alt=""> Visa Card
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="checkbox">
+                          <label for="">
+                            <input type="checkbox">
+                            <img src="../../dist/img/credit/mestro.png" alt=""> Mestro
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <h3>VAT/Tax settings</h3>
+                    <div class="radio">
+                      <label for=""><input type="radio" checked="checked"> Default (17 % is usually excluded in Islamabad room prices)</label>
+                    </div>
+                    <div class="radio">
+                      <label for=""><input type="radio"> I don't need to pay VAT</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <h3>To complete your registration, check the boxes below:</h3>
+                    <div class="checkbox">
+                      <label for=""><input type="checkbox" checked="checked"> I certify that this is a legitimate accommodation business with all necessary licenses and permits, which can be shown upon first request. Booking.com B.V. reserves the right to verify and investigate any details provided in this registration.</label>
+                    </div>
+                    <div class="checkbox">
+                      <label for=""><input type="checkbox" checked="checked"> I have read, accepted, and agreed to the General Delivery Terms and Privacy Policy.</label>
+                    </div>
+                  </div>
+                </div>
+                <!-- / .box-body -->
+              </div>
+              <small>Almost done! You can always change the info even after you complete the registration.</small>
+              <button type="button" class="btn bg-olive btn-block nextBtn">Confirm Registeration</button>
+            </div>
+            <!-- / #step-7 -->
+          </form>
+        </div>
+        <!-- /.col-sm-8 -->
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+ 

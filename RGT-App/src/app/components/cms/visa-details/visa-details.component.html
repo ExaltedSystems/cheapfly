@@ -1,0 +1,128 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>Visa Details</h1>
+    <ol class="breadcrumb">
+      <li>
+        <a routerLink="{{backPage}}">
+          <i class="fa fa-chevron-left"></i> {{backPageTitle}}</a>
+      </li>
+      <li class="active">Visa Details</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="box box-warning">
+      <div class="box-header with-border">
+        <h1 class="box-title">{{viewVisaDetails.countryName}}</h1>
+        <!-- <p>{{visaDetails.hotel_address}}</p> -->
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <div [innerHtml]="viewVisaDetails.details | safeHtml">
+        </div>
+          <a (click)="updateVisa($event,'visa_details', viewVisaDetails.details)">
+            <mat-icon class="mat-icon material-icons">edit</mat-icon>
+          </a>
+        <form *ngIf="_isCmsVisa" [formGroup]="edtVisaForm" (submit)="edtCmsVisa(edtVisaForm.value)">
+          <div class="col-sm-12">
+            <!-- <textarea formControlName="details" class="form-control" cols="30" rows="5" style="border:1px solid #ccc"></textarea> -->
+            <ck-editor skin="moono-lisa" formControlName="details" language="en"></ck-editor>
+          </div>
+          <button [disabled]="!edtVisaForm.valid" color="primary" mat-button mat-raised-button>Update</button>
+          <button (click)="closeEdtVisaForm($event)" color="primary" mat-stroked-button class="mat-stroked-button mat-primary">Cancel</button>
+        </form>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3" *ngFor="let visa of visaDetails; let i=index">
+            <div class="visa-card card shadow mb-4">
+              <div class="card-body">
+                <div class="tst">
+                  <b class="card-title">{{ visa.visaTypeId }}</b>
+                  <small class="text-muted pull-right">{{ visa.numEntries }}</small>
+                  <a (click)="updtVisaDetails($event,i,'type_duration_entry',visa)">
+                    <mat-icon class="mat-icon material-icons">edit</mat-icon>
+                  </a>
+                </div>
+                <!-- <small class="text-muted"> NOE:- {{visa.numEntries}}</small> -->
+                <h5>{{ visa.durationId }}</h5>
+                <h5 class="text-center">Includes
+                  <a (click)="updtVisaDetails($event,i,'visaIncludes',visa)">
+                    <mat-icon class="mat-icon material-icons">edit</mat-icon>
+                  </a>
+                </h5>
+                <ul class="visa-includes">
+                  <li *ngFor="let includes of visa.visaIncludes">{{ includes.item_text }}</li>
+                </ul>
+                <p class="visa-price">{{ visa.currencyCode }} {{ visa.visaPrice }}/-
+                  <a data-column="visaPrice" id="{{visa.visaDetailId}}" (click)="updtVisaDetails($event,i,'visaPrice',visa)">
+                    <mat-icon class="mat-icon material-icons">edit</mat-icon>
+                  </a>
+                </p>
+                <small class="visa-price-small">per person</small>
+                <p>Required Documents
+                  <a (click)="updtVisaDetails($event,i,'docRequired',visa)">
+                    <mat-icon class="mat-icon material-icons">edit</mat-icon>
+                  </a>
+                </p>
+                <!-- <hr> -->
+                <!-- Dynamically Set Update Form Fields -->
+                <form [formGroup]="edtVisaDetailsFrm" *ngIf="_isVisaPrice === i" (submit)="edtVisaPriceCurr(edtVisaDetailsFrm.value)">
+                  <div class="dynamic-inputs" [ngSwitch]="visaDetailsSwitch">
+                    <div class="dynamic-inputs-case" *ngSwitchCase="'currency_price'">
+                      <select formControlName="currencyCode" class="form-control">
+                        <option value="">-- Select Currency --</option>
+                        <option *ngFor="let item of visaCurrenciesList" value="{{item.code}}">{{item.name}}</option>
+                      </select>
+                      <input type="text" formControlName="visaPrice" class="form-control" placeholder="e.g 45">
+                    </div>
+                    <div class="dynamic-inputs-case" *ngSwitchCase="'type_duration_entry'">
+                      <select formControlName="visaTypeId" class="form-control">
+                        <option value="">-- Select Type --</option>
+                        <option *ngFor="let item of visaTypeLists" value="{{item.item_text}}">{{item.item_text}}</option> -->
+                      </select>
+                      <select formControlName="durationId" class="form-control">
+                        <option value="">-- Select Duration --</option>
+                        <option *ngFor="let item of visaDurationsList" value="{{item.item_text}}">{{item.item_text}}</option>
+                      </select>
+                      <select formControlName="numEntries" class="form-control">
+                        <option value="">-- Select Entry --</option>
+                        <option *ngFor="let item of visaNumEntryList" value="{{item.item_text}}">{{item.item_text}}</option>
+                      </select>
+                    </div>
+                    <div class="dynamic-inputs-case" *ngSwitchCase="'visa_includes'">
+                      <ng-multiselect-dropdown [placeholder]="'Select Visa Includes'" [data]="visaIncludes" [(ngModel)]="selectedItems" formControlName="visaIncludes"
+                        [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                      </ng-multiselect-dropdown>
+                    </div>
+                    <div class="dynamic-inputs-case" *ngSwitchCase="'doc_required'">
+                      <ng-multiselect-dropdown [placeholder]="'Select Required Documents'" [data]="documentsRequired" [(ngModel)]="selectedDocuments"
+                        formControlName="docRequired" [settings]="dropdownSettings" (onSelect)="onDocumentSelect($event)" (onSelectAll)="onDocumentSelectAll($event)">
+                      </ng-multiselect-dropdown>
+                    </div>
+                  </div>
+                  <button [disabled]="!edtVisaDetailsFrm.valid" color="primary" mat-button mat-raised-button>Update</button>
+                  <button (click)="closeUpdateVisaPriceForm($event, i)" color="primary" mat-stroked-button class="mat-stroked-button mat-primary">Cancel</button>
+                </form>
+                <!-- Dynamically Set Update Form Fields -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <h3>Documents Required
+        </h3>
+        <ul>
+          <li *ngFor="let doc of docRequired">{{ doc.item_text }}</li>
+        </ul>
+      </div>
+      <!-- /.box-body -->
+    </div>
+  </section>
+  <!-- /.content -->
+</div>
+<app-footer></app-footer>

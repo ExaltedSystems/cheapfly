@@ -1,0 +1,1003 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        New Property
+        <small>Register New Property</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">New Property</li>
+      </ol>
+    </section>
+    
+    <!-- Main content -->
+    <section class="content">
+      <div #target></div>
+      <mat-horizontal-stepper [linear]="isLinear" #stepper>
+        <mat-step [stepControl]="basicInfoForm">
+          <form [formGroup]="basicInfoForm" (ngSubmit)="addBasicInfo(basicInfoForm.value)" class="classic-form">
+            <ng-template matStepLabel>Basic Info</ng-template>
+            <div class="row">
+              <div class="col-sm-8">
+                <div class="box box-warning">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">What do you want to list?</h3>
+                  </div>
+                  <!-- /.box-header -->
+                    <div class="box-body">
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label>Which property type below best describes your property?</label>
+                        <select class="form-control" formControlName="property_types" name="property_type" (change)="showRaiting()" [(ngModel)]="selectedPropertyType" id="property_type">
+                          <option value="" data-labeltrans="Total number of rooms">
+                            Please select
+                          </option>
+                          <option *ngFor="let type of hotelTypes" value="{{type.id}}">{{type.name}}</option>
+                        </select>
+                        <span class="form-error" *ngIf="basicInfoForm.controls['property_types'].hasError('required') && basicInfoForm.controls['property_types'].touched ">  
+                          Property Type is required  
+                          </span>
+                      </div>
+                      <div class="form-group">
+                        <label>What's the name of your property?</label>
+                        <input type="text" class="form-control" formControlName="name" name="name" id="name" placeholder="Enter ...">
+                        <small>Guests will see this name when they search for a place to stay.</small>
+                        <span class="form-error" *ngIf="basicInfoForm.controls['name'].hasError('required') && basicInfoForm.controls['name'].touched ">  
+                          Property Name is required  
+                          </span>  
+                      </div>
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <label>Total number of rooms</label>
+                            <input type="text" class="form-control" formControlName="total_rooms" [(ngModel)]="totalRoomsInProperty" name="total_rooms" id="total_rooms" mask="9999" placeholder="Enter ...">
+                            <span class="form-error" *ngIf="basicInfoForm.controls['total_rooms'].hasError('required') && basicInfoForm.controls['total_rooms'].touched ">  
+                              Total Rooms is required  
+                            </span>  
+                          </div>
+                          <div class="col-sm-4" *ngIf="isHotel">
+                            <label>Star Raiting</label>
+                            <select formControlName="star_rating" name="star_rating" id="star_rating" class="form-control">
+                              <option value="">Select</option>
+                              <option value="1">1 Star</option>
+                              <option value="2">2 Star</option>
+                              <option value="3">3 Star</option>
+                              <option value="4">4 Star</option>
+                              <option value="5">5 Star</option>
+                            </select>
+                            <span class="form-error" *ngIf="basicInfoForm.controls['star_rating'].hasError('required') && basicInfoForm.controls['star_rating'].touched ">  
+                              Star Raiting is required  
+                              </span> 
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <!-- /.box-body -->
+                </div>
+                <div class="box box-warning">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">What are the contact details for this property?</h3>
+                  </div>
+                  <!-- /.box-header -->
+                    <div class="box-body">
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label>Contact Name</label>
+                        <input type="text" class="form-control" formControlName="contact_name" name="contact_name" id="contact_name" placeholder="Enter ...">
+                        <span class="form-error" *ngIf="basicInfoForm.controls['contact_name'].hasError('required') && basicInfoForm.controls['contact_name'].touched">  
+                          Contact Name is required  
+                        </span> 
+                      </div>
+                      <div class="form-group">
+                        <label>Contact number (so we can assist with your registration when needed)</label>
+                        <div class="row">
+                          <div class="col-sm-6 phone-input-group"> 
+                            <select formControlName="country_code" name="country_code" id="country_code" class="form-control" [(ngModel)]="countryCode" style="width: 20%; display: inline; float: left;">
+                              <option value="+92">+92</option>
+                              <option value="+97">+97</option>
+                            </select>
+                            <input type="text" class="form-control" formControlName="phone_no" name="phone_no" id="phone_no" placeholder="Enter ..." 
+                             mask="(000) 000 00 00" style="width: 80%; display: inline; float: left;">
+                            <span class="form-error" *ngIf="basicInfoForm.controls['phone_no'].hasError('required') && basicInfoForm.controls['phone_no'].touched ">  
+                              Phone No is required 
+                            </span>
+                            <span class="form-error" *ngIf="basicInfoForm.get('phone_no').errors?.minlength">  
+                              Please Enter Valid Phone No
+                            </span>
+                            <span class="form-error" *ngIf="basicInfoForm.controls['country_code'].hasError('required') && basicInfoForm.controls['country_code'].touched ">  
+                              Country Code is required 
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <!-- /.box-body -->
+                </div>
+                <div class="box box-warning">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Where's your property located?</h3>
+                  </div>
+                  <!-- /.box-header -->
+                    <div class="box-body">
+                      <!-- text input -->
+                      
+                      <div class="form-group">
+                        <label>Country/Region</label>
+                        <select formControlName="country_id" name="country_id" id="country_id" (change)="getCitiesList()" [(ngModel)]="selectedCountryId" class="form-control">
+                          <option value="">Select Country</option>
+                          <option *ngFor="let country of countriesList" value="{{country.id}}">{{country.name}}</option>
+                        </select>
+                        <span class="form-error" *ngIf="basicInfoForm.controls['country_id'].hasError('required') && basicInfoForm.controls['country_id'].touched">  
+                          Country is required 
+                          </span>
+                      </div>
+                      <div class="form-group">
+                        <label>City</label>
+                        <select formControlName="city" name="city" id="city" class="form-control">
+                          <option value="">Select City</option>
+                          <option *ngFor="let city of citiesList" value="{{city.id}}">{{city.name}}</option>
+                        </select>
+                        <span class="form-error" *ngIf="basicInfoForm.controls['city'].hasError('required') && basicInfoForm.controls['city'].touched">  
+                          City is required 
+                          </span>
+                      </div>
+                      <div class="form-group">
+                        <label>Street address</label>
+                        <input type="text" formControlName="address" name="address" id="address" class="form-control" placeholder="Enter ...">
+                        <span class="form-error" *ngIf="basicInfoForm.controls['address'].hasError('required') && basicInfoForm.controls['address'].touched">  
+                          Address is required 
+                          </span>
+                      </div>
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <label>ZIP Code</label>
+                            <input type="text" class="form-control" formControlName="zip_code" name="zip_code" id="zip_code" mask="99999" placeholder="Enter ...">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <!-- /.box-body -->
+                </div>
+                <!-- <p>{{formId}}</p> -->
+                <button type="submit" *ngIf="!editForm" mat-button matStepperNext (click)="scroll(target)" class="bg-olive">Save & Next</button>
+                <button type="submit" *ngIf="editForm" mat-button class="bg-olive">Update</button>
+                <i class="form-error" >{{submitError}}</i>
+              </div>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="propertyDetailsForm">
+          <form class="classic-form" [formGroup]="propertyDetailsForm" (ngSubmit)="addPropertyDetails(propertyDetailsForm.value)">
+            <ng-template matStepLabel>Property Details</ng-template>
+            <div class="row">
+              <div class="col-sm-8">
+                <div class="box box-warning">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Property details</h3> <br>
+                    <small>Now let us know some general details about your property like facilities available, internet, parking, and the languages you speak.</small>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <!-- text input -->
+                    <div class="form-group">
+                      <label>Internet (Is internet available to guests?)</label> <br>
+                      <small>Internet access is important for many travelers. Free Wi-Fi is a huge selling point, too!</small>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <select name="internet_availability" id="internet_availability" formControlName="internet_availability" [(ngModel)]="checkInternetAvalibility" (change)="internetAvalibility()" class="form-control">
+                            <option value="">Select</option>
+                            <option value="No">No</option>
+                            <option value="Yes, Free">Yes, Free</option>
+                            <option value="Yes, Paid">Yes, Paid</option>
+                          </select>
+                          <span class="form-error" *ngIf="propertyDetailsForm.controls['internet_availability'].hasError('required') && propertyDetailsForm.controls['internet_availability'].touched ">  
+                            Internet Field is required  
+                          </span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-4" *ngIf="isInternet">
+                          <label for="">What type of internet?</label>
+                          <select name="internet_type" id="internet_type" formControlName="internet_type" class="form-control">
+                            <option value="" selected="selected">Select</option>
+                            <option value="WiFi">WiFi</option>
+                            <option value="Cable">Cable</option>
+                            <option value="Both">Both</option>
+                          </select>
+                          <span class="form-error" *ngIf="propertyDetailsForm.controls['internet_type'].hasError('required') && propertyDetailsForm.controls['internet_type'].touched ">  
+                            Internet Type is required  
+                          </span>
+                        </div>
+                        <div class="col-sm-4" *ngIf="isInternet">
+                          <label for="">Internet Range</label>
+                          <select name="internet_range" id="internet_range" formControlName="internet_range" class="form-control">
+                            <option value="" selected="selected">Select</option>
+                            <option value="Public Area">Public Area</option>
+                            <option value="Some Rooms">Some Rooms</option>
+                            <option value="All Rooms">All Rooms</option>
+                            <option value="Entire Property">Entire Property</option>
+                          </select>
+                          <span class="form-error" *ngIf="propertyDetailsForm.controls['internet_range'].hasError('required') && propertyDetailsForm.controls['internet_range'].touched ">  
+                            Internet Range required  
+                          </span>
+                        </div>
+                        <div class="col-sm-4" *ngIf="isInternetPaid">
+                          <label for="">Price for internet (per day)</label>
+                          <input type="text" name="internet_price_per_day" id="internet_price_per_day" formControlName="internet_price_per_day" mask="99999" class="form-control">
+                          <span class="form-error" *ngIf="propertyDetailsForm.controls['internet_price_per_day'].hasError('required') && propertyDetailsForm.controls['internet_price_per_day'].touched ">  
+                            Internet Price is required  
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- / .box-body -->
+                </div>
+                <div class="box box-warning">
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label>Parking (Is parking available to guests?)</label> <br>
+                      <small>This information is especially important for those traveling to your property by car.</small>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <select name="parking_availability" id="parking_availability" formControlName="parking_availability" [(ngModel)]="checkParkingAvalibility" (click)="parkingAvalibility()" class="form-control">
+                            <option value="">Select</option>
+                            <option value="No">No</option>
+                            <option value="Yes, Free">Yes, Free</option>
+                            <option value="Yes, Paid">Yes, Paid</option>
+                          </select>
+                          <span class="form-error" *ngIf="propertyDetailsForm.controls['parking_availability'].hasError('required') && propertyDetailsForm.controls['parking_availability'].touched ">  
+                              Parking Field is required  
+                            </span>
+                        </div>
+                        <div class="col-sm-3" *ngIf="isParking">
+                          <select name="parking_type" id="parking_type" formControlName="parking_type" class="form-control">
+                            <option value="">Select</option>
+                            <option value="Private">Private</option>
+                            <option value="Public">Public</option>
+                          </select>
+                          <span class="form-error" *ngIf="propertyDetailsForm.controls['parking_type'].hasError('required') && propertyDetailsForm.controls['parking_type'].touched ">  
+                            Please select Parking Type  
+                          </span>
+                        </div>
+                        <div class="col-sm-3" *ngIf="isParking">
+                          <select name="parking_location" id="parking_location" formControlName="parking_location" class="form-control">
+                            <option value="">Select</option>
+                            <option value="On Site">On Site</option>
+                            <option value="Off Site">Off Site</option>
+                          </select>
+                          <span class="form-error" *ngIf="propertyDetailsForm.controls['parking_location'].hasError('required') && propertyDetailsForm.controls['parking_location'].touched ">  
+                            Please select Parking Location  
+                          </span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6" *ngIf="isParking">
+                        <label>Do guests need to reserve a parking space?</label>
+                          <select name="parking_reservation" id="parking_reservation" formControlName="parking_reservation" class="form-control">
+                            <option value="" selected="selected">Select</option>
+                            <option value="Reservation Needed">Reservation Needed</option>
+                            <option value="No reservation needed">No reservation needed</option>
+                          </select>
+                          <span class="form-error" *ngIf="propertyDetailsForm.controls['parking_reservation'].hasError('required') && propertyDetailsForm.controls['parking_reservation'].touched ">  
+                            Please select Option  
+                          </span>
+                        </div>
+                        <div class="col-sm-6" *ngIf="isParkingPaid">
+                          <label for="">Price for parking (per day)</label>
+                          <input type="text" name="parking_price_per_day" id="parking_price_per_day" formControlName="parking_price_per_day" mask="99999" class="form-control">
+                          <span class="form-error" *ngIf="propertyDetailsForm.controls['parking_price_per_day'].hasError('required') && propertyDetailsForm.controls['parking_price_per_day'].touched ">  
+                            Please select Parking Price  
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- / .box-body -->
+                </div>
+                <div class="box box-warning">
+                  <div class="box-body">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label>Breakfast (Is breakfast available to guests?)</label> <br>
+                          <select name="breakfast" id="breakfast" formControlName="breakfast" [(ngModel)]="checkBreakfastAvalibility" (change)="breakfastAvalibility()" class="form-control">
+                            <option value="">Select</option>
+                            <option value="No">No</option>
+                            <option value="Yes, Included in Price">Yes, Included in Price</option>
+                            <option value="Yes, Its Optional">Yes, It's Optional</option>
+                          </select>
+                          <span class="form-error" *ngIf="propertyDetailsForm.controls['breakfast'].hasError('required') && propertyDetailsForm.controls['breakfast'].touched ">  
+                              Breakfast Field is required  
+                            </span>
+                        </div>
+                        <div class="col-sm-6" *ngIf="isBreakfastPaid">
+                          <label for="">Price for Breakfast (per person,per day)</label>
+                        <input type="text" name="breakfast_price" id="breakfast_price" formControlName="breakfast_price" mask="9999" class="form-control">
+                        <span class="form-error" *ngIf="propertyDetailsForm.controls['breakfast_price'].hasError('required') && propertyDetailsForm.controls['breakfast_price'].touched ">  
+                          Breakfast Price is required  
+                        </span>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="isBreakfast">
+                        <div class="col-sm-6">
+                          <label for="">What kind of breakfast is available?</label>
+                          <ng-multiselect-dropdown [placeholder]="'Select Breakfast Types'" [data]="breakfastList" [(ngModel)]="breakfastOptionsModel" formControlName="breakfast_type"
+                            [settings]="dropdownSettings" (onSelect)="onBreakfastSelect($event)" (onSelectAll)="onSelectAllBreakfast($event)">
+                          </ng-multiselect-dropdown>
+                          {{breakfastOptionsModel}}
+                        </div>
+                      </div>
+                                            
+                    </div>
+                  </div>
+                  <!-- / .box-body -->
+                </div>
+                <!-- <h1>test {{languageModel}}</h1> -->
+                <div class="box box-warning">
+                  <div class="box-body">
+                    <div class="form-group">
+                      <div class="row">
+                          <div class="col-sm-6">
+                              <label>Languages Spoken by Your Staff</label> <br>
+                              <small>Select the language(s) in which you or your staff can help guests.</small> <br>
+                              <ng-multiselect-dropdown [placeholder]="'Select Languages'" [data]="languagesList" [(ngModel)]="languageModel" formControlName="language_id"
+                                [settings]="dropdownSettings" (onSelect)="onLanguageSelect($event)" (onSelectAll)="onSelectAllLanguages($event)">
+                              </ng-multiselect-dropdown>
+                              <p>test {{languageModel}}</p>
+                              <span class="form-error" *ngIf="propertyDetailsForm.controls['language_id'].hasError('required') && propertyDetailsForm.controls['language_id'].touched ">  
+                                Language is required  
+                              </span>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+                <button *ngIf="!editForm" mat-button matStepperPrevious>Back</button>
+                <button *ngIf="!editForm" type="submit" mat-button matStepperNext (click)="scroll(target)" class="bg-olive">Save & Next</button>
+                <button *ngIf="editForm" type="submit" mat-button class="bg-olive">Update</button>
+              </div>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="roomDetailsForm">
+          <form [formGroup]="roomDetailsForm" (ngSubmit)="addRoomDetails(roomDetailsForm.value)" class="classic-form">
+            <ng-template matStepLabel>Room Details</ng-template>
+            <div class="row">
+              <div class="col-sm-7">
+                <div class="box box-warning">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Room Details</h3> <br>
+                    <small>Tell us about your first room. After that's done you can fill in the details of your other rooms.</small>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <div  *ngIf="totalRoomsToAdd > 0 else noRoomsAlert">
+                      <div class="alert alert-warning">Your have {{totalRoomsToAdd}} Rooms Left to Add</div>
+                    </div>
+                    <ng-template #noRoomsAlert>
+                      <div class="alert alert-success">Your have No Rooms Left to Add</div>
+                      <div class="text-right"><button type="button" mat-button matStepperNext class="bg-olive">Continue</button></div>
+                    </ng-template>
+                    <!-- text input -->
+                    <div class="form-group" *ngIf="totalRoomsToAdd > 0">
+                      <label>Room Type</label> <br>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <select name="room_type" id="room_type" formControlName="room_type" (change)="getRoomNames()" [(ngModel)]="roomTypeId" class="form-control">
+                            <option value="">Please select</option>
+                            <option *ngFor="let roomType of roomTypeList" value="{{roomType.id}}">{{roomType.name}}</option>
+                          </select>
+                          <span class="form-error" *ngIf="roomDetailsForm.controls['room_type'].hasError('required') && roomDetailsForm.controls['room_type'].touched ">  
+                              Room Type is required  
+                            </span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label for="">Room Name</label>
+                          <select name="room_name" id="room_name" formControlName="room_name" [(ngModel)]="room_name" class="form-control">
+                            <option value="" class="hidden">Please select</option>
+                            <option *ngFor="let roomName of roomNameList" value="{{roomName.id}}">{{roomName.name}}</option>
+                          </select>
+                          <small>This is the name guests will see on the Rehmantravel.com website.</small>
+                          <span class="form-error" *ngIf="roomDetailsForm.controls['room_name'].hasError('required') && roomDetailsForm.controls['room_name'].touched ">  
+                              Room Name is required  
+                            </span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label for="">Number of (rooms of this type)</label>
+                          <select name="room_number" id="room_number" formControlName="room_number" #rooms [(ngModel)]="room_number" (change)="checkRoomsCount(rooms.value)" class="form-control">
+                            <option *ngFor="let item of createRange(totalRoomsInProperty)" value="{{item}}">{{item}}</option>
+                            <!-- <option value="2">02</option>
+                            <option value="3">03</option>
+                            <option value="4">04</option>
+                            <option value="5">05</option>
+                            <option value="6">06</option>
+                            <option value="7">07</option>
+                            <option value="8">08</option>
+                            <option value="9">09</option>
+                            <option value="10">10</option> -->
+                          </select>
+                          <small>Out of {{totalRoomsAdded}} rooms at your property</small>
+                          <div *ngIf="roomDetailsForm.controls['room_number'].touched">
+                            <span class="form-error" *ngIf="roomDetailsForm.controls['room_number'].hasError('required')">  
+                              Room Number is required  
+                            </span>
+                            <span class="form-error" *ngIf="!roomDetailsForm.controls['room_number'].hasError('required') && roomDetailsForm.controls['room_number'].dirty">  
+                              You have only {{totalRoomsToAdd}} Rooms to Add!
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <label for="">Smoking Policy</label>
+                          <select name="smooking_policy" id="smooking_policy" formControlName="smooking_policy" [(ngModel)]="smooking_policy" class="form-control">
+                            <option value="Smooking">Smoking</option>
+                            <option value="Non-Smooking">Non-Smoking</option>
+                            <option value="Not Specified">Not Specified</option>
+                          </select>
+                          <span class="form-error" *ngIf="roomDetailsForm.controls['smooking_policy'].hasError('required') && roomDetailsForm.controls['smooking_policy'].touched ">  
+                              Smooking Policy is required  
+                            </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- / .box-body -->
+                </div>
+                <div class="box box-warning" *ngIf="totalRoomsToAdd > 0">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Bed Options</h3> <br>
+                    <small>This is the lowest price that we automatically apply to this room for all dates. Before your property goes live, you can set seasonal pricing on your property dashboard.</small>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <!-- text input -->
+                    <div class="form-group">
+                      <label>What kind of beds are available in this room?(Optional)</label> <br>
+                      <div class="row" formArrayName="bed_types" *ngFor="let item of roomDetailsForm.get('bed_types').controls; let i = index;">
+                        <div formGroupName="{{i}}">
+                            <div class="col-sm-6">
+                                <select name="bed_type" formControlName="bed_type" id="bed_type" class="form-control">
+                                  <option value="">Please select</option>
+                                  <option value="Twin bed(s) 90-130 cm wide"> Twin bed(s) 90-130 cm wide </option>
+                                  <option value="Full bed(s) 131-150 cm wide"> Full bed(s) 131-150 cm wide </option>
+                                  <option value="Queen bed(s) 151-180 cm wide"> Queen bed(s) 151-180 cm wide </option>
+                                  <option value="King bed(s) 181-210 cm wide"> King bed(s) 181-210 cm wide </option>
+                                  <option value="Bunk bed Variable Size"> Bunk bed Variable Size </option>
+                                  <option value="Sofa bed Variable Size"> Sofa bed Variable Size </option>
+                                  <option value="Futon bed(s)Variable Size">Futon bed(s)Variable Size</option>
+                                </select>
+                                <!-- <span class="form-error" *ngIf="roomDetailsForm.get('bed_type').errors && roomDetailsForm.get('bed_type').touched ">  
+                                    Bed Type is required  
+                                  </span> -->
+                              </div>
+                              <div class="col-sm-2">
+                                <select  name="number_of_beds" formControlName="number_of_beds" id="number_of_beds" class="form-control">
+                                  <option value="1" selected="selected">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                  <option value="6">6</option>
+                                  <option value="7">7</option>
+                                  <option value="8">8</option>
+                                  <option value="9">9</option>
+                                  <option value="10">10</option>
+                                </select>
+                                <!-- <span class="form-error" *ngIf="roomDetailsForm.get('number_of_beds').errors && roomDetailsForm.get('number_of_beds').touched ">  
+                                    No of Beds is required  
+                                  </span> -->
+                              </div>
+                              <span *ngIf="i > 0" class="fa fa-times-circle warning fa-remove" (click)="removeItem(i)"></span>
+                        </div>
+                      </div>
+                      <button type="button" mat-raised-button (click)="addItem()">Add Another Bed</button>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <label for="">How many guests can stay in this room?</label>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <input type="text" name="no_of_guests" id="no_of_guests" formControlName="no_of_guests" [(ngModel)]="no_of_guests" mask="99" class="form-control">
+                        </div>
+                      </div>
+                      <span class="form-error" *ngIf="roomDetailsForm.controls['no_of_guests'].hasError('required') && roomDetailsForm.controls['no_of_guests'].touched ">  
+                        Room Number is required  
+                      </span>
+                    </div>
+                  </div>
+                  <!-- / .box-body -->
+                </div>
+                <div class="box box-warning" *ngIf="totalRoomsToAdd > 0">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Base price per night</h3> <br>
+                    <small>This is the lowest price that we automatically apply to this room for all dates. Before your property goes live, you can set seasonal pricing on your property dashboard.</small>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label for="">Room Price Per Night</label>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <input type="text" name="price_pp_pn" id="price_pp_pn" formControlName="price_pp_pn" [(ngModel)]="price_pp_pn" mask="99999" class="form-control">
+                          <small>PKR / Per night</small>
+                          <span class="form-error" *ngIf="roomDetailsForm.controls['price_pp_pn'].hasError('required') && roomDetailsForm.controls['price_pp_pn'].touched ">  
+                              Price is required  
+                            </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- / .box-body -->
+                </div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button type="submit" *ngIf="totalRoomsToAdd > 0" mat-button class="bg-olive" (click)="scroll(target)">Save & Next</button>
+                <!-- <button type="submit" *ngIf="totalRoomsToAdd > 0" mat-button matStepperNext class="bg-olive" (click)="scroll(target)">Save & Continue</button> -->
+                <!-- <span class="text-success">{{roomMsg}}</span> -->
+              </div>
+              <div class="col-sm-5">
+                <div class="box">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Layout & Pricing</h3> <br>
+                    <small>Rooms you've added</small>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <table class="table table-bordered">
+                      <tr *ngFor="let room of insertedRooms">
+                        <td>{{room.room_name}}</td>
+                        <td><b>{{room.room_number}}</b> Rooms</td>
+                        <td align="center">
+                          <a (click)="editRoom(room.id)" *ngIf="!roomEditStatus"><span class="fa fa-edit info"></span></a>
+                          <a (click)="discardRoomEdit(room.id,room.room_number)" *ngIf="roomEditStatus && edit_room_id == room.id"><span class="fa fa-undo text-success"></span></a>
+                          <a (click)="deleteRoom(room.id)" *ngIf="!roomEditStatus"><span class="fa fa-times text-danger"></span></a>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+
+              </div>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="amenitiesForm">
+          <form [formGroup]="amenitiesForm" (submit)="addRoomFacilities(amenitiesForm.value)" class="classic-form">
+            <ng-template matStepLabel>Amenities</ng-template>
+            <div class="row">
+              <div class="col-sm-8">
+                <div class="box box-warning">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Amenities</h3> <br>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <input type="hidden" formControlName="formId" [(ngModel)]="formId">
+                          <label for="">Extra Bed Option</label> <br>
+                          <small>These are the options for beds that can be added upon request.</small> <br>
+                          <mat-radio-group formControlName="extra_bed">
+                            <mat-radio-button [checked]="amenitiesForm.get('extra_bed').value == 'Yes'" [value]="1">Yes</mat-radio-button>
+                            <mat-radio-button [checked]="amenitiesForm.get('extra_bed').value == 'No'" [value]="2">No</mat-radio-button>
+                          </mat-radio-group>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <label for="">Select the number of extra beds that can be added.</label>
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <input type="text" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+                  <!-- / .box-body -->
+                </div>
+
+                <mat-accordion>
+                  <!-- main loop -->
+                  <div *ngFor="let facl of amenitiesForm.controls.mainFacility.controls; let i = index" formArrayName="mainFacility">
+                    <mat-expansion-panel formGroupName="{{i}}">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          {{facl.get('name').value}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                          <span class="pull-right">0 / {{facl.get('sub').controls.length}} Selected</span>
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+                      <!-- inner loop -->
+                      <div>
+                        <div *ngFor="let sub of facl.get('sub').controls; let s = index" formArrayName="sub">
+                          <div class="row" formGroupName="{{s}}">
+                            <div class="col-sm-4">
+                              <mat-checkbox name="{{sub.get('id').value}}" formControlName="value" (change)="sub.get('roomOpt').value=$event.checked">{{sub.get('name').value}}</mat-checkbox>
+                            </div>
+                            <div class="col-sm-5 col-sm-offset-2" *ngIf="sub.get('roomOpt').value == true">
+                              <mat-radio-group formControlName="option">
+                                <mat-radio-button [checked]="sub.get('option').value == 1" [value]="1">All Rooms</mat-radio-button>
+                                <mat-radio-button [checked]="sub.get('option').value == 2" [value]="2">Some Rooms</mat-radio-button>
+                              </mat-radio-group>
+                            </div>
+                            <div class="col-sm-12 facility-room-checkbox" *ngIf="sub.get('roomOpt').value == true && sub.get('option').value == 2" formArrayName="roomFacilities">
+                              <div *ngFor="let fc_room of insertedRooms; let ri = index">
+                                <div formGroupName="{{ri}}">
+                                  <mat-checkbox name="{{fc_room.id}}" [checked]="fc_room.value == 1" formControlName="value">{{fc_room.room_name}}</mat-checkbox>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- / inner loop -->
+                    </mat-expansion-panel>
+                  </div>
+                </mat-accordion>
+                <br>
+                <button *ngIf="!editForm" mat-button matStepperPrevious>Back</button>
+                <button *ngIf="!editForm" type="submit" mat-button matStepperNext (click)="scroll(target)" class="bg-olive">Save & Next</button>
+                <button *ngIf="editForm" type="submit" mat-button class="bg-olive">Update</button>
+              </div>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="photosForm">
+          <form class="classic-form" enctype="multipart/form-data">
+            <ng-template matStepLabel>Photos</ng-template>
+            <div class="row">
+              <div class="col-sm-8">
+                <div class="box box-warning">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Photos</h3> <br>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <!-- text input -->
+                    <div class="form-group">
+                      <image-upload
+                        [max]="100"
+                        [url]="imageUploadUrl"
+                        [buttonCaption]="'Select Images!'"
+                        [dropBoxMessage]="'OR Drop your images here!'"
+                        [extensions]="['jpg','jpeg','png','gif']"
+                        [class]="'customClass'"      
+                        (removed)="onRemoved($event)"
+                        (uploadFinished)="imageFinishedUploading($event)"
+                        (uploadStateChanged)="onUploadStateChanged($event)">
+                      </image-upload>
+                      <!-- for uploaded files -->
+                      <!-- [uploadedFiles]="['http://192.168.5.75/localhotel/uploads']" -->
+                    </div>
+                    
+                    <div class="form-group">
+                      <div class="col-sm-3" *ngFor="let img of hotelImages">
+                        <img src="{{img.image_path}}" alt="" class="thumbnail" style="margin-bottom:0">
+                        <div class="">
+                          <button class="btn btn-danger btn-sm" (click)="deleteImage(img.id)">Delete</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- / .box-body -->
+                </div>
+                <button *ngIf="!editForm" mat-button matStepperPrevious>Back</button>
+                <button *ngIf="!editForm" mat-button matStepperNext class="bg-olive" (click)="scroll(target)">Save & Next</button>
+                <!-- <button *ngIf="editForm" mat-button matStepperNext >Update</button> -->
+              </div>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="policyForm">
+          <form [formGroup]="policyForm" (ngSubmit)="addPolicies(policyForm.value)"  class="classic-form">
+            <ng-template matStepLabel>Policies</ng-template>
+            <div class="row">
+              <div class="col-sm-8">
+                <div class="box box-warning">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Policies</h3> <br>
+                    <small>Specify some basic policies. How flexible are you with cancellations?</small>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <!-- text input -->
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label for="">Cancellation Policy</label> <br>
+                          <small>How many days in advance can guests cancel free of charge?</small>
+                          <select formControlName="cancellation_days" id="cancellation_days" class="form-control">
+                            <option value="0">Day of arrival (6 pm)</option>
+                            <option value="1">1 day</option>
+                            <option value="2">2 days</option>
+                            <option value="3">3 days</option>
+                            <option value="7">7 days</option>
+                            <option value="14">14 days</option>
+                          </select>
+                          <small>or guests will pay 100%</small>
+                          <select formControlName="cancellation_charges" id="cancellation_charges" class="form-control">
+                            <option value="first_night">of the first night</option>
+                            <option value="full_stay">of the full stay</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="alert alert-warning">
+                        <p><span class="fa fa-bell"></span> The guest must cancel 2 days in advance or pay 100% of the price of the whole stay.</p>
+                        <small>You'll be able to make changes to your policies later on – this is just to get you started.</small>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- / .box-body -->
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="box box-warning">
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Check In Time</h3> <br>
+                      </div>
+                      <!-- /.box-header -->
+                      <div class="box-body">
+                        <!-- text input -->
+                        <div class="form-group">
+                          <div class="col-sm-5">
+                            <label for="">From</label>
+                            <select formControlName="checkin_from" id="checkin_from" class="form-control">
+                              <option value="07:00">7:00&nbsp;AM</option>
+                              <option value="07:30">7:30&nbsp;AM</option>
+                              <option value="08:00">8:00&nbsp;AM</option>
+                              <option value="08:30">8:30&nbsp;AM</option>
+                              <option value="09:00">9:00&nbsp;AM</option>
+                              <option value="09:30">9:30&nbsp;AM</option>
+                              <option value="10:00">10:00&nbsp;AM</option>
+                              <option value="10:30">10:30&nbsp;AM</option>
+                              <option value="11:00">11:00&nbsp;AM</option>
+                              <option value="11:30">11:30&nbsp;AM</option>
+                              <option value="12:00">12:00&nbsp;PM</option>
+                              <option value="12:30">12:30&nbsp;PM</option>
+                              <option value="13:00">1:00&nbsp;PM</option>
+                              <option value="13:30">1:30&nbsp;PM</option>
+                              <option value="14:00">2:00&nbsp;PM</option>
+                              <option value="14:30">2:30&nbsp;PM</option>
+                              <option value="15:00">3:00&nbsp;PM</option>
+                              <option value="15:30">3:30&nbsp;PM</option>
+                              <option value="16:00">4:00&nbsp;PM</option>
+                              <option value="16:30">4:30&nbsp;PM</option>
+                              <option value="17:00">5:00&nbsp;PM</option>
+                              <option value="17:30">5:30&nbsp;PM</option>
+                              <option value="18:00">6:00&nbsp;PM</option>
+                              <option value="18:30">6:30&nbsp;PM</option>
+                              <option value="19:00">7:00&nbsp;PM</option>
+                              <option value="19:30">7:30&nbsp;PM</option>
+                              <option value="20:00">8:00&nbsp;PM</option>
+                            </select>
+                          </div>
+                          <div class="col-sm-5">
+                            <label for="">To</label>
+                            <select formControlName="checkin_to" id="checkin_to" class="form-control">
+                              <option value="07:00">7:00&nbsp;AM</option>
+                              <option value="07:30">7:30&nbsp;AM</option>
+                              <option value="08:00">8:00&nbsp;AM</option>
+                              <option value="08:30">8:30&nbsp;AM</option>
+                              <option value="09:00">9:00&nbsp;AM</option>
+                              <option value="09:30">9:30&nbsp;AM</option>
+                              <option value="10:00">10:00&nbsp;AM</option>
+                              <option value="10:30">10:30&nbsp;AM</option>
+                              <option value="11:00">11:00&nbsp;AM</option>
+                              <option value="11:30">11:30&nbsp;AM</option>
+                              <option value="12:00">12:00&nbsp;PM</option>
+                              <option value="12:30">12:30&nbsp;PM</option>
+                              <option value="13:00">1:00&nbsp;PM</option>
+                              <option value="13:30">1:30&nbsp;PM</option>
+                              <option value="14:00">2:00&nbsp;PM</option>
+                              <option value="14:30">2:30&nbsp;PM</option>
+                              <option value="15:00">3:00&nbsp;PM</option>
+                              <option value="15:30">3:30&nbsp;PM</option>
+                              <option value="16:00">4:00&nbsp;PM</option>
+                              <option value="16:30">4:30&nbsp;PM</option>
+                              <option value="17:00">5:00&nbsp;PM</option>
+                              <option value="17:30">5:30&nbsp;PM</option>
+                              <option value="18:00">6:00&nbsp;PM</option>
+                              <option value="18:30">6:30&nbsp;PM</option>
+                              <option value="19:00">7:00&nbsp;PM</option>
+                              <option value="19:30">7:30&nbsp;PM</option>
+                              <option value="20:00">8:00&nbsp;PM</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- / .box-body -->
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="box box-warning">
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Check Out Time</h3> <br>
+                      </div>
+                      <!-- /.box-header -->
+                      <div class="box-body">
+                        <!-- text input -->
+                        <div class="form-group">
+                          <div class="col-sm-5">
+                            <label for="">From</label>
+                            <select formControlName="checkout_from" id="checkout_from" class="form-control">
+                              <option value="07:00">7:00&nbsp;AM</option>
+                              <option value="07:30">7:30&nbsp;AM</option>
+                              <option value="08:00">8:00&nbsp;AM</option>
+                              <option value="08:30">8:30&nbsp;AM</option>
+                              <option value="09:00">9:00&nbsp;AM</option>
+                              <option value="09:30">9:30&nbsp;AM</option>
+                              <option value="10:00">10:00&nbsp;AM</option>
+                              <option value="10:30">10:30&nbsp;AM</option>
+                              <option value="11:00">11:00&nbsp;AM</option>
+                              <option value="11:30">11:30&nbsp;AM</option>
+                              <option value="12:00">12:00&nbsp;PM</option>
+                              <option value="12:30">12:30&nbsp;PM</option>
+                              <option value="13:00">1:00&nbsp;PM</option>
+                              <option value="13:30">1:30&nbsp;PM</option>
+                              <option value="14:00">2:00&nbsp;PM</option>
+                              <option value="14:30">2:30&nbsp;PM</option>
+                              <option value="15:00">3:00&nbsp;PM</option>
+                              <option value="15:30">3:30&nbsp;PM</option>
+                              <option value="16:00">4:00&nbsp;PM</option>
+                              <option value="16:30">4:30&nbsp;PM</option>
+                              <option value="17:00">5:00&nbsp;PM</option>
+                              <option value="17:30">5:30&nbsp;PM</option>
+                              <option value="18:00">6:00&nbsp;PM</option>
+                              <option value="18:30">6:30&nbsp;PM</option>
+                              <option value="19:00">7:00&nbsp;PM</option>
+                              <option value="19:30">7:30&nbsp;PM</option>
+                              <option value="20:00">8:00&nbsp;PM</option>
+                            </select>
+                          </div>
+                          <div class="col-sm-5">
+                            <label for="">To</label>
+                            <select formControlName="checkout_to" id="checkout_to" class="form-control">
+                              <option value="07:00">7:00&nbsp;AM</option>
+                              <option value="07:30">7:30&nbsp;AM</option>
+                              <option value="08:00">8:00&nbsp;AM</option>
+                              <option value="08:30">8:30&nbsp;AM</option>
+                              <option value="09:00">9:00&nbsp;AM</option>
+                              <option value="09:30">9:30&nbsp;AM</option>
+                              <option value="10:00">10:00&nbsp;AM</option>
+                              <option value="10:30">10:30&nbsp;AM</option>
+                              <option value="11:00">11:00&nbsp;AM</option>
+                              <option value="11:30">11:30&nbsp;AM</option>
+                              <option value="12:00">12:00&nbsp;PM</option>
+                              <option value="12:30">12:30&nbsp;PM</option>
+                              <option value="13:00">1:00&nbsp;PM</option>
+                              <option value="13:30">1:30&nbsp;PM</option>
+                              <option value="14:00">2:00&nbsp;PM</option>
+                              <option value="14:30">2:30&nbsp;PM</option>
+                              <option value="15:00">3:00&nbsp;PM</option>
+                              <option value="15:30">3:30&nbsp;PM</option>
+                              <option value="16:00">4:00&nbsp;PM</option>
+                              <option value="16:30">4:30&nbsp;PM</option>
+                              <option value="17:00">5:00&nbsp;PM</option>
+                              <option value="17:30">5:30&nbsp;PM</option>
+                              <option value="18:00">6:00&nbsp;PM</option>
+                              <option value="18:30">6:30&nbsp;PM</option>
+                              <option value="19:00">7:00&nbsp;PM</option>
+                              <option value="19:30">7:30&nbsp;PM</option>
+                              <option value="20:00">8:00&nbsp;PM</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- / .box-body -->
+                    </div>
+                  </div>
+                </div>
+                <button *ngIf="!editForm" mat-button matStepperPrevious>Back</button>
+                <button *ngIf="!editForm" type="submit" mat-button matStepperNext (click)="scroll(target)" class="bg-olive">Save & Next</button>
+                <button *ngIf="editForm" type="submit" mat-button class="bg-olive">Update</button>
+              </div>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="paymentsForm">
+          <form #paymentForm="ngForm" (submit)="addHotelPayment(paymentForm.value)" class="classic-form">
+            <ng-template matStepLabel>Payments</ng-template>
+            <div class="row">
+              <div class="col-sm-8">
+                <div class="box box-warning">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Payments</h3> <br>
+                    <small>This is the last section of info for listing your property! Specify the payment types you accept, tax details, and other options like cancellation policies.</small>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <!-- text input -->
+                    <div class="form-group">
+                      <h3>Guest Payment Options</h3>
+                      <label for="">Can you charge credit cards at the property?</label>
+                      <br>
+                      <mat-radio-group name="is_credit_card" #iscreditcard="ngModel" required ngModel>
+                        <mat-radio-button [checked]="is_credit_card == 'yes'" value="yes"> Yes</mat-radio-button>
+                        <mat-radio-button [checked]="is_credit_card == 'no'" value="no"> No</mat-radio-button>
+                      </mat-radio-group>
+                      <span class="form-error" *ngIf="iscreditcard.required">This Field is Required</span>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="checkbox">
+                            <mat-checkbox name="visa" [checked]="visa == true" ngModel value="yes">
+                              <img src="../../../assets/img/credit/visa.png" alt=""> Visa Card
+                            </mat-checkbox>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="checkbox">
+                            <mat-checkbox name="master" [checked]="master == true" ngModel value="yes">
+                              <img src="../../../assets/img/credit/mastercard.png" alt=""> Master Card
+                            </mat-checkbox>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="checkbox">
+                            <mat-checkbox name="amx" [checked]="amx == true" ngModel value="yes">
+                              <img src="../../../assets/img/credit/american-express.png" alt=""> American Express
+                            </mat-checkbox>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="checkbox">
+                            <mat-checkbox name="mestro" [checked]="mestro == true" ngModel value="yes">
+                              <img src="../../../assets/img/credit/mestro.png" alt=""> Mestro
+                            </mat-checkbox>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <h3>VAT/Tax settings</h3>
+                      <div class="checkbox">
+                        <mat-checkbox name="default_tax" [checked]="default_tax == true" ngModel value="yes"> Default (17 % is usually excluded in Islamabad room prices)</mat-checkbox>
+                      </div>
+                      <div class="checkbox">
+                        <mat-checkbox name="no_pay_vat" [checked]="no_pay_vat == true" ngModel value="no">I don't need to pay VAT</mat-checkbox>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <h3>To complete your registration, check the boxes below:</h3>
+                      <div class="checkbox">
+                        <mat-checkbox name="verify" [checked]="verify == true" ngModel value="yes"> I certify that this is a legitimate accommodation business with all necessary licenses and permits, <br> 
+                          which can be shown upon first request.Rehmantravel.com B.V.  reserves the right to verify and <br>investigate any details provided in this registration.</mat-checkbox>
+                      </div>
+                      <div class="checkbox">
+                        <mat-checkbox name="agree" [checked]="agree == true" ngModel value="no"> I have read, accepted, and agreed to the General Delivery Terms and Privacy Policy.</mat-checkbox>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- / .box-body -->
+                </div>
+                <div><small>Almost done! You can always change the info even after you complete the registration.</small></div>
+                <button *ngIf="!editForm" mat-button (click)="stepper.reset()">Reset</button>
+                <button *ngIf="!editForm" mat-button matStepperPrevious>Back</button>
+                <button *ngIf="!editForm" mat-button matStepperNext class="bg-olive">Confirm Registeration</button>
+                <button *ngIf="editForm" mat-button class="bg-olive">Update</button>
+              </div>
+            </div>
+          </form>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <app-footer></app-footer>
+ 

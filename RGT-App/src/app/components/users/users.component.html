@@ -1,0 +1,81 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      All Users
+    </h1>
+    <small>New User Registration</small>
+    <ol class="breadcrumb">
+      <li>
+        <a routerLink="/">
+          <i class="fa fa-edit"></i> Dashboard</a>
+      </li>
+      <li class="active">Users Management</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+
+      <div class="col-sm-12">
+        <div class="example-container mat-elevation-z8">
+          <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+            <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+            <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+              No Data Found On The Server
+            </div>
+          </div>
+          <div class="table-filter" ng2-sticky>
+            <mat-form-field>
+              <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="Search" [(ngModel)]="searchValue">
+              <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchValue='';applyFilter('')">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+            <button mat-button mat-raised-button routerLink="/addEditUser" class="pull-right btn-success">New User</button>
+          </div>
+          <mat-table #table [dataSource]="parseUsers" matSort matSortActive="username" matSortDisableClear matSortDirection="asc">
+            <ng-container matColumnDef="sNo">
+              <mat-header-cell *matHeaderCellDef>S. No.</mat-header-cell>
+              <mat-cell *matCellDef="let element; let i = index;">{{paginator.pageSize * ((paginator.pageIndex + 1) - 1) + i + 1}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="username">
+              <mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.username}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="email">
+              <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.email}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="activated">
+              <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.activated == 1 ? 'Active' : 'De-Active'}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+              <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+              <mat-cell *matCellDef="let element ">
+                <a (click)="editUser(element , i)">
+                  <mat-icon class="mat-icon material-icons">edit</mat-icon>
+                </a>
+                <a (click)="deleteUser(element , i)">
+                  <mat-icon class="mat-icon material-icons">delete</mat-icon>
+                </a>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50, 100, 150, 200, 500, 1000]" [showFirstLastButtons]="true"
+            [length]="resultsLength">
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /.content -->
+</div>
+<app-footer></app-footer>

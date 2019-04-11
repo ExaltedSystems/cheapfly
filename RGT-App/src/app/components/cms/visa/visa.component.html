@@ -1,0 +1,100 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Visas
+    </h1>
+    <small>All Visas</small>
+    <ol class="breadcrumb">
+      <li>
+        <a routerLink="/">
+          <i class="fa fa-edit"></i> Dashboard</a>
+      </li>
+      <li class="active">Visas</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="example-container mat-elevation-z8">
+          <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+            <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+            <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+              No Data Found On The Server
+            </div>
+          </div>
+          <div class="table-filter" ng2-sticky>
+            <mat-form-field>
+              <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="Search" [(ngModel)]="searchValue">
+              <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchValue='';applyFilter('')">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+              <button mat-button mat-raised-button routerLink="/newVisa" class="pull-right btn-success">New Visa</button>
+              <button mat-button mat-raised-button color="primary" routerLink="/masterLists" class="pull-right">Master Lists</button>
+              <!-- <button mat-button class="pull-right">
+              <mat-icon>filter</mat-icon> Filter</button> -->
+          </div>
+
+          <mat-table #table [dataSource]="dataSource" matSort matSortActive="countryName" matSortDisableClear matSortDirection="asc">
+
+            <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="SNo">
+              <mat-header-cell *matHeaderCellDef> S. No </mat-header-cell>
+              <mat-cell *matCellDef="let element; let i = index;">{{paginator.pageSize * ((paginator.pageIndex + 1) - 1) + i + 1}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="countryName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Visa Country </mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.countryName}}</mat-cell>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="details">
+              <mat-header-cell *matHeaderCellDef> Visa Details </mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.details.substring(0,60)}}</mat-cell>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="status">
+              <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.status == 1 ? 'Enabled' : 'Disabled'}}</mat-cell>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="createdDate">
+              <mat-header-cell *matHeaderCellDef> Date Created </mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.createdDate | date:'medium'}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+              <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <a (click)="editPage(element, i)">
+                  <mat-icon>Edit</mat-icon>
+                </a>
+                <!-- <a routerLink="/newVisa/?id={{element.ID}}"><mat-icon>Edit</mat-icon></a>  -->
+                <a routerLink="/viewVisaDetails/?id={{element.ID}}">
+                  <mat-icon>View</mat-icon>
+                </a>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50, 100, 150, 200, 500, 1000]" [showFirstLastButtons]="true"
+            [length]="resultsLength">
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /.content -->
+</div>
+<app-footer></app-footer>

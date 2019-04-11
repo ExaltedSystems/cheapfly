@@ -1,0 +1,99 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        New Section 
+      </h1>
+          <small>Create New Section</small>
+      <ol class="breadcrumb">
+        <li><a routerLink="/deals"><i class="fa fa-edit"></i> Sections</a></li>
+        <li class="active">New Section</li>
+      </ol>
+    </section>
+  
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+          <div class="col-sm-8">
+              <div class="box box-warning">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">New Section</h3>
+                    <!-- <p>{{hoteldata.hotel_address}}</p> -->
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <form (submit)="addNewVisa(newVisa.value)" class="classic-form form-horizontal" enctype="multipart/form-data">
+                        <div class="form-group">
+                          <div class="col-sm-6">
+                            <label>Section Title</label>
+                            <input type="text" class="form-control">
+                          </div>
+                          <div class="col-sm-6">
+                            <label>Module</label>
+                            <select  class="form-control">
+                              <option value="">-- Select Type --</option>                                              
+                              <option value="">Visa</option>                                              
+                              <option value="">Tours</option>                                              
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-6">
+                            <label>Module List</label>
+                            <select  class="form-control">
+                                <option value="">-- Select Entry --</option>
+                              <option *ngFor="let item of visaDurationsList" value="{{item.ID}}">{{item.duration}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-12">
+                              <button mat-button mat-raised-button color="primary">Preview Section</button>
+                              <br>
+                          </div>
+                        </div>
+                        
+                        <div class="form-group">
+                          <div class="col-sm-12">
+                            <mat-checkbox >Status</mat-checkbox>
+                          </div>
+                        </div>
+                        <br>
+                        <div class="text-center">
+                          <br>
+                          <button type="submit" name="insert_btn" value="insert_btn" class="btn bg-olive" >Create</button>
+                        </div>
+                    </form>
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="box box-warning">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Section Details</h3>
+                  <!-- <p>{{hoteldata.hotel_address}}</p> -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <h4>Pre Build Sections</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">Contact Form</li>
+                    <li class="list-group-item">Tours Sidebar</li>
+                    <li class="list-group-item">Destinations Sidebar</li>
+                    <li class="list-group-item">Facebook Reviews</li>
+                  </ul>
+                </div>
+                <!-- /.box-body -->
+              </div>
+        </div>
+        </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- CK Editor -->
+
+  <app-footer></app-footer>

@@ -1,0 +1,169 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>Master Lists</h1>
+        <nav class="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a routerLink="/">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a routerLink="/visa">Visas</a>
+                </li>
+                <li class="breadcrumb-item active">MasterLists</li>
+            </ol>
+        </nav>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="box box-warning">
+                    <div class="box-header with-border">
+                        <h1 class="text-center box-title">Visa Duration</h1>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <form [formGroup]="jsonItemForm" (submit)="addJsonItem(jsonItemForm.value)" class="classic-form form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <select formControlName="array_index" class="form-control">
+                                        <option value="">-- Select Type --</option>
+                                        <option value="visaDocuments">Documents Required</option>
+                                        <option value="visaDurations">Visa Durations</option>
+                                        <option value="visaValidities">Visa Validities</option>
+                                        <option value="visaTypes">Visa Types</option>
+                                        <option value="numOfEntries">Number of Entry</option>
+                                        <option value="visaIncludes">Visa Includes</option>
+                                        <option value="validCities">Valid Cities</option>
+                                    </select>
+                                    <div class="form-error" *ngIf="jsonItemForm.controls['array_index'].hasError('required') && jsonItemForm.controls['array_index'].touched">
+                                        Type field required
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input type="text" formControlName="item_text" placeholder="Item Text" class="form-control">
+                                    <div class="form-error" *ngIf="jsonItemForm.controls['item_text'].hasError('required') && jsonItemForm.controls['item_text'].touched">
+                                        Item Text field required
+                                    </div>
+                                </div>
+                                <div class="col-sm-1 check">
+                                    <mat-checkbox formControlName="status">Status</mat-checkbox>
+                                </div>
+                                <div class="col-sm-3 position-relative ">
+                                    <button type="submit" [disabled]="!jsonItemForm.valid" color="primary" mat-button mat-raised-button>submit</button>
+                                    <button (click)="jsonItemForm.reset()" color="default" mat-button mat-raised-button>RESET</button>
+                                </div>
+                                <!-- <div class="col-sm-2 position-relative ">
+                                </div> -->
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <!-- <div class="example-container mat-elevation-z8">
+                    <div class="example-header ">
+                        <mat-form-field class="pull-right">
+                            <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="Search" [(ngModel)]="searchValue" autocomplete="off">
+                            <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchValue='';applyFilter('')">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </div>
+                    <mat-table #table [dataSource]="parseDurationData" class="tableHeader">
+                        <ng-container matColumnDef="sno">
+                            <mat-header-cell *matHeaderCellDef>S. No.</mat-header-cell>
+                            <mat-cell *matCellDef="let element; let i = index;">{{i+1}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="Item-Text">
+                            <mat-header-cell *matHeaderCellDef>Item Text</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.item_text}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="Type">
+                            <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{(element.array_index ? element.array_index : 'visaTypes') | camelcaseSpace | titlecase}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="status">
+                            <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.status == 1 ? 'Enabled' : 'Disabled'}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="actions">
+                            <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+                            <mat-cell *matCellDef="let element ">
+                                <a (click)="editJsonItem(element , i)">
+                                    <mat-icon class="mat-icon material-icons">edit</mat-icon>
+                                </a>
+                                <a (click)="deleteJsonItem(element , i)">
+                                    <mat-icon class="mat-icon material-icons">delete</mat-icon>
+                                </a>
+                            </mat-cell>
+                        </ng-container>
+                        <mat-header-row class="sNo" *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    </mat-table>
+
+                    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50, 100, 150, 200, 500]" [showFirstLastButtons]="true">
+                    </mat-paginator>
+                </div> -->
+                <div class="example-container mat-elevation-z8">
+                    <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+                        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+                        <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+                            No Data Found On The Server
+                        </div>
+                    </div>
+                    <div class="table-filter" ng2-sticky>
+                        <mat-form-field>
+                            <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="Search" [(ngModel)]="searchValue">
+                            <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchValue='';applyFilter('')">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </div>
+                    <mat-table #table [dataSource]="parseDurationData" matSort matSortActive="Item-Text" matSortDisableClear matSortDirection="asc">
+                        <ng-container matColumnDef="sno">
+                            <mat-header-cell *matHeaderCellDef>S. No.</mat-header-cell>
+                            <mat-cell *matCellDef="let element; let i = index;">{{paginator.pageSize * ((paginator.pageIndex + 1) - 1) + i + 1}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="Item-Text">
+                            <mat-header-cell *matHeaderCellDef>Item Text</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.item_text}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="Type">
+                            <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{(element.array_index ? element.array_index : 'visaTypes') | camelcaseSpace | titlecase}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="status">
+                            <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.status == 1 ? 'Enabled' : 'Disabled'}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="actions">
+                            <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+                            <mat-cell *matCellDef="let element ">
+                                <a (click)="editJsonItem(element , i)">
+                                    <mat-icon class="mat-icon material-icons">edit</mat-icon>
+                                </a>
+                                <a (click)="deleteJsonItem(element , i)">
+                                    <mat-icon class="mat-icon material-icons">delete</mat-icon>
+                                </a>
+                            </mat-cell>
+                        </ng-container>
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    </mat-table>
+                    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50, 100, 150, 200, 500, 1000]" [showFirstLastButtons]="true"
+                        [length]="resultsLength">
+                    </mat-paginator>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<app-footer></app-footer>

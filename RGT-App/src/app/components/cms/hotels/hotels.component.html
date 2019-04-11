@@ -1,0 +1,44 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>Hotel Contents</h1>
+    <ol class="breadcrumb">
+      <li>
+        <a routerLink="/">
+          <i class="fa fa-edit"></i> Dashboard</a>
+      </li>
+      <li class="active">Hotel Contents</li>
+    </ol>
+  </section>
+  <section class="content">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="box box-warning">
+          <div class="box-header with-border">
+            <h3 class="box-title">Insert / Update Hotel Contents</h3>
+          </div>
+          <div class="box-body">
+            <form class="classic-form form-horizontal" [formGroup]="hotelForm" (submit)=addEditHotelData(hotelForm.value)>
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <label>Contents</label>
+                  <ck-editor formControlName="contents" skin="moono-lisa" language="en" [fullPage]="true"></ck-editor>
+                  <div class="form-error" *ngIf="hotelForm.controls['contents'].hasError('required') && hotelForm.controls['contents'].touched">
+                    Contents field required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12 text-center">
+                  <button type="submit" [disabled]="hotelForm.invalid" class="btn bg-olive">Insert / Edit Flight Contents</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<app-footer></app-footer>

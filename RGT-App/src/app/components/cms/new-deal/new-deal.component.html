@@ -1,0 +1,222 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>New Deal</h1>
+    <small>Create New Deal</small>
+    <ol class="breadcrumb">
+      <li>
+        <a routerLink="/deals">
+          <i class="fa fa-edit"></i> Deals</a>
+      </li>
+      <li class="active">New Deal</li>
+    </ol>
+  </section>
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="box box-warning">
+          <div class="box-header with-border">
+            <h3 class="box-title">New Deal</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <form class="classic-form form-horizontal" [formGroup]="dealsForm" (submit)=addDeals(dealsForm.value)>
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <label>Name</label>
+                  <input type="text" formControlName="name" class="form-control">
+                  <div class="form-error" *ngIf="dealsForm.controls['name'].hasError('required') && dealsForm.controls['name'].touched">
+                    Visa Country field required
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label>Meta Title</label>
+                  <input type="text" formControlName="metaTitle" class="form-control">
+                  <div class="form-error" *ngIf="dealsForm.controls['metaTitle'].hasError('required') && dealsForm.controls['metaTitle'].touched">
+                    Visa Country field required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <label>URL</label>
+                  <input type="text" formControlName="url" class="form-control">
+                  <div class="form-error" *ngIf="dealsForm.controls['url'].hasError('required') && dealsForm.controls['url'].touched">
+                    URL field required
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <label>Meta Keywords</label>
+                  <input type="text" formControlName="metaKeywords" class="form-control">
+                  <div class="form-error" *ngIf="dealsForm.controls['metaKeywords'].hasError('required') && dealsForm.controls['metaKeywords'].touched">
+                    Meta Keywords field required
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <label>Sort By</label>
+                  <input type="number" formControlName="sort" class="form-control">
+                  <div class="form-error" *ngIf="dealsForm.controls['sort'].hasError('required') && dealsForm.controls['sort'].touched">
+                    sort field required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <label>Meta Description</label>
+                  <input type="text" formControlName="metaDescription" class="form-control">
+                  <!-- <textarea formControlName="metaDescription" class="form-control" type="text" rows="3"></textarea> -->
+                  <div class="form-error" *ngIf="dealsForm.controls['metaDescription'].hasError('required') && dealsForm.controls['metaDescription'].touched">
+                    Meta Description field required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <label>Image Alt</label>
+                  <input type="text" class="form-control" formControlName="imageAlt">
+                </div>
+                <div class="col-sm-4">
+                  <label>Image Title</label>
+                  <input type="text" class="form-control" formControlName="imageTitle">
+                </div>
+                <div class="col-sm-2">
+                  <label>&nbsp;</label>
+                  <br>
+                  <mat-checkbox formControlName="status">Status</mat-checkbox>
+                </div>
+              </div>
+              <!-- <div class="form-group">
+                <div class="col-sm-6">
+                  <label>URL</label>
+                  <input type="text" formControlName="url" class="form-control">
+                  <div class="form-error" *ngIf="dealsForm.controls['url'].hasError('required') && dealsForm.controls['url'].touched">
+                    URL field required
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label>Sort(number/order in which want to display)</label>
+                  <input type="number" formControlName="sort" class="form-control">
+                  <div class="form-error" *ngIf="dealsForm.controls['sort'].hasError('required') && dealsForm.controls['sort'].touched">
+                    sort field required
+                  </div>
+                </div>
+              </div> -->
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <label>Activation Date</label>
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="picker" formControlName="activationDate" placeholder="Pick a date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                  <div class="form-error" *ngIf="dealsForm.controls['activationDate'].hasError('required') && dealsForm.controls['activationDate'].touched">
+                    Activation Date field required
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label>DeActivation Date</label>
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="pick" formControlName="deActivationDate" placeholder="Pick a date">
+                    <mat-datepicker-toggle matSuffix [for]="pick"></mat-datepicker-toggle>
+                    <mat-datepicker #pick></mat-datepicker>
+                  </mat-form-field>
+                  <div class="form-error" *ngIf="dealsForm.controls['deActivationDate'].hasError('required') && dealsForm.controls['deActivationDate'].touched">
+                    DeActivation Date field required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <label>Short Description</label>
+                  <textarea formControlName="shortDescription" class="form-control"></textarea>
+                  <div class="form-error" *ngIf="dealsForm.controls['url'].hasError('required') && dealsForm.controls['url'].touched">
+                    URL field required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <label>Description</label>
+                  <br>
+                  <!-- <textarea class="form-control" name="description" id="detail"></textarea> -->
+                  <ck-editor name="editor1" formControlName="description" [(ngModel)]="editorValue" skin="moono-lisa" language="en" [fullPage]="true"></ck-editor>
+                  <div class="form-error" *ngIf="dealsForm.controls['description'].hasError('required') && dealsForm.controls['description'].touched">
+                    description field required
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="form-group">
+                <div class="col-sm-12">
+                  <mat-checkbox formControlName="status">Status</mat-checkbox>
+                </div>
+              </div> -->
+              <div class="form-group text-center">
+                <button type="submit" name="insert_btn" [disabled]="!dealsForm.valid" value="insert_btn" class="btn bg-olive">Insert</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="box box-warning">
+          <div class="box-header with-border">
+            <h3 class="box-title">Deal Image</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <form action="" class="classic-form">
+              <div class="form-group">
+                <fancy-image-uploader [options]="thumbnailOptions" (onUpload)="onUpload($event)"></fancy-image-uploader>
+                <!-- <label style="margin-top: 9px;">Image</label>
+                <div style="margin-top: 9px;">
+                  <input type='file' class="filestyle" data-input="false" name="img_get" onchange="readURL(this);" />
+                  <div id="img">
+                  </div>
+                </div> -->
+              </div>
+              <div class="clearfix"></div>
+              <!-- <div class="form-group">
+                <label>Image Alt</label>
+                <input type="text" class="form-control" formControlName="imageAlt">
+              </div>
+              <div class="form-group">
+                <label>Image Title</label>
+                <input type="text" class="form-control" formControlName="ImageTitle">
+              </div>
+              <div class="form-group">
+                <label>URL</label>
+                <input type="text" class="form-control" formControlName="url">
+              </div> -->
+            </form>
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /.content -->
+</div>
+<!-- CK Editor -->
+<!-- <script src="../../../../assets/js/ckeditor.js"></script> -->
+<script>
+  $(function () {
+
+    console.log("ckeditor", CKEDITOR.basePath);
+  //   // Replace the <textarea id="editor1"> with a CKEditor
+  //   // instance, using default configuration.
+  //   CKEDITOR.replace('editor1');
+  })
+</script>
+<p-dialog header="Upload Deal Image" [(visible)]="isImagePopup" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200"
+  [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+  <fancy-image-uploader [options]="thumbnailOptions" (onUpload)="onUpload($event)"></fancy-image-uploader>
+  <p-footer>
+    <button type="button" mat-button color="warn" icon="pi pi-check" (click)="isImagePopup=false" label="Close Popup">Close Popup</button>
+  </p-footer>
+</p-dialog>
+<app-footer></app-footer>

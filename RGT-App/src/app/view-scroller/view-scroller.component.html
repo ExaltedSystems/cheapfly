@@ -1,0 +1,98 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Scroller detail
+    </h1>
+        <small>detail page</small>
+    <ol class="breadcrumb">
+      <li><a routerLink="/"><i class="fa fa-edit"></i> Dashboard</a></li>
+      <li class="active">detail</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-warning">
+                <div class="box-header with-border">
+                 <div class="form-group">
+                    <div class="col-sm-6">
+                   <h5   class="box-title">name:</h5>
+                  <div class="shadow">
+                  {{scrollerData?scrollerData.name :''}}
+                  <!-- {{hoteldata.hotel_address}} -->
+                </div></div></div></div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <div class="form-group">
+                    <div class="col-sm-6 with-border">
+                      <h5  >Meta Title:</h5>
+                      <div class="shadow">
+                      {{scrollerData?scrollerData.metaTitle :''}}
+                    </div>
+                    </div>
+                    <div class="col-sm-6 border">
+                        <h5  >Meta Keywords:</h5>
+                        <div class="shadow">
+                        {{ scrollerData.metaKeywords}}
+                      </div>  
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <div class="col-sm-6 with-border">
+                        <h5  >Meta Description:</h5>
+                        <div class="shadow">
+                        {{scrollerData.metaDescription}}
+                      </div> 
+                      </div>
+                      <div class="col-sm-6 border">
+                          <h5  >URL:</h5>
+                          <div class="shadow">
+                          {{scrollerData.URL}}
+                          </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-6 with-border">
+                          <h5  >Activation Date :</h5>
+                          <div class="shadow">
+                          {{scrollerData.activationDate | date}}
+                        </div>
+                        </div>
+                        <div class="col-sm-6 border">
+                            <h5  >DeActivation Date:</h5>
+                            <div class="shadow">
+                            {{scrollerData.deActivationDate | date}}
+                        </div></div>
+                      </div>
+                      
+                      <div class="form-group">
+                          <div class="col-sm-12 with-border">
+                            <h5  >Description :</h5>
+                            <div class="shadow">
+                            {{scrollerData.description |safeHtml}}
+                        </div>
+                      </div></div>
+                        <div class="form-group">
+                            <div class="col-sm-6 ">
+                              <h5  >status :</h5>
+                              <div class="shadow">
+                              {{scrollerData.status==1?'Enabled':'Disabled'}}
+                            </div>
+                        </div>
+                          </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+        </div>
+      </div>
+  </section>
+  <!-- /.content -->
+</div>
+<app-footer></app-footer>

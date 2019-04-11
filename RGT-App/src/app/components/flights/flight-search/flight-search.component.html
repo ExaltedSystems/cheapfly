@@ -1,0 +1,91 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Flight Search 
+      </h1>
+          <small>Flight Search</small>
+      <ol class="breadcrumb">
+        <li><a routerLink="/pages"><i class="fa fa-edit"></i> Dashboard</a></li>
+        <li class="active">Flight Search</li>
+      </ol>
+    </section>
+  
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="box box-warning">
+            <div class="box-header with-border">
+              <h3 class="box-title">Flight Search</h3>
+              <!-- <p>{{hoteldata.hotel_address}}</p> -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <form action="" class="form-horizontal classic-form">
+                <div class="form-group">
+                  <div class="col-sm-6">
+                    <label for="flyingFrom">Flying From</label>
+                    <input type="text" id="flyingFrom" class="form-control">
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="flyingTo">Flying To</label>
+                    <input type="text" id="flyingTo" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-3">
+                    <label for="departureDate">Departure Date</label>
+                    <input type="text" id="departureDate" class="form-control">
+                  </div>
+                  <div class="col-sm-3">
+                    <label for="arrivingDate">Arriving Date</label>
+                    <input type="text" id="arrivingDate" class="form-control">
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="departureDate">Number of Passenger</label>
+                    <select name="" id="" class="form-control"></select>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <!-- /.box-body -->
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="box box-warning">
+            <div class="box-header with-border">
+              <h3 class="box-title">Today's Deals</h3>
+              <!-- <p>{{hoteldata.hotel_address}}</p> -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              Deals
+            </div>
+            <!-- /.box-body -->
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="box box-warning">
+            <div class="box-header with-border">
+              <h3 class="box-title">Search History</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              Recent Searches
+            </div>
+            <!-- /.box-body -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- CK Editor -->
+
+  <app-footer></app-footer>

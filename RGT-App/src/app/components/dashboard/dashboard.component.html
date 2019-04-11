@@ -1,0 +1,111 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Dashboard
+      <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li>
+        <a routerLink="/">
+          <i class="fa fa-dashboard"></i> Home</a>
+      </li>
+      <li class="active">Dashboard</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="quick-links md-bootstrap">
+          <div class="md-panel">
+            <div class="row">
+              <div class="col-sm-2">
+                <a href="" class="icon-link">
+                  <img src="assets/icons/small/plane-02.png" alt="">
+                  <span>Flights</span>
+                </a>
+              </div>
+              <div class="col-sm-2">
+                <a href="" class="icon-link">
+                  <img src="assets/icons/small/hotel.png" alt="">
+                  <span>Hotels</span>
+                </a>
+              </div>
+              <div class="col-sm-2">
+                <a href="" class="icon-link">
+                  <img src="assets/icons/small/accounts.png" alt="">
+                  <span>Accounts</span>
+                </a>
+              </div>
+              <div class="col-sm-2">
+                <a href="" class="icon-link">
+                  <img src="assets/icons/small/wallet.png" alt="">
+                  <span>Sales</span>
+                </a>
+              </div>
+              <div class="col-sm-2">
+                <a href="" class="icon-link">
+                  <img src="assets/icons/small/reports.png" alt="">
+                  <span>Reports</span>
+                </a>
+              </div>
+              <div class="col-sm-2">
+                <a href="" class="icon-link">
+                  <img src="assets/icons/small/settings.png" alt="">
+                  <span>Settings</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="m-4" style="margin:20px;">
+            <form class="example-form">
+                <mat-form-field class="example-full-width">
+                  <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+                <!-- <mat-form-field>
+                    <mat-label>Address << using the directive >></mat-label>
+                    <input matInput
+                         matGoogleMapsAutocomplete
+                         [country]="de"
+                         (onAutocompleteSelected)="onAutocompleteSelected($event)"
+                         (onLocationSelected)="onLocationSelected($event)">
+                  </mat-form-field> -->
+
+                  <!-- <mat-google-maps-autocomplete [appearance]="appearance.OUTLINE"
+                              (onAddressSelected)="onAddressSelected($event)"
+                              (onLocationSelected)="onLocationSelected($event)">
+      </mat-google-maps-autocomplete> -->
+                
+              </form>
+        </div>
+        
+      </div>
+      <div class="col-sm-4">
+        <div class="box">
+          <div class="box-body">
+
+            <h1 translate>home</h1>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+  <h1>{{currentUser.username}}</h1>
+  <!-- /.content -->
+</div>
+<app-footer></app-footer>

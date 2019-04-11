@@ -1,0 +1,170 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Ticket Report
+    </h1>
+
+    <!-- <ol class="breadcrumb">
+      <li>
+        <a routerLink="/scroller">
+          <i class="fa fa-edit"></i> Scroller</a>
+      </li>
+      <li class="active">New Scroller</li>
+    </ol> -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="table-filter" ng2-sticky>
+      <mat-form-field>
+        <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="Search" [(ngModel)]="searchValue" autocomplete="off">
+        <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchValue='';applyFilter('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <!-- <button mat-button mat-raised-button color="primary" routerLink="/newDeal" class="pull-right">New Deal</button>
+  <button mat-button mat-raised-button color="primary" (click)="print()" class="pull-right">print</button> -->
+      <button mat-button class="pull-right">
+        <mat-icon>filter</mat-icon>Filter</button>
+    </div>
+    <mat-table #table [dataSource]="parseTicketReportData" matSort matSortActive="countryId" matSortDisableClear matSortDirection="asc">
+
+      <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="sno">
+        <mat-header-cell *matHeaderCellDef> S. No </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index;"> {{(i+1)}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="ref_no">
+        <mat-header-cell *matHeaderCellDef> Ref_No </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <a (click)="refNoData(element ,i)">{{element.ref_no}}</a>
+        </mat-cell>
+      </ng-container>
+      <!-- Weight Column -->
+      <ng-container matColumnDef="pnr">
+        <mat-header-cell *matHeaderCellDef> Pnr </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.pnr}} </mat-cell>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="first_name">
+        <mat-header-cell *matHeaderCellDef> firstName </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.first_name}} </mat-cell>
+      </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="last_name">
+        <mat-header-cell *matHeaderCellDef> LastName </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.last_name}} </mat-cell>
+      </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="dateTime">
+        <mat-header-cell *matHeaderCellDef> DateTime </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.dateTime | date:'medium'}} </mat-cell>
+      </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="departDate">
+        <mat-header-cell *matHeaderCellDef> DepartDate </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.departDate | date:'medium'}} </mat-cell>
+      </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="mobile">
+        <mat-header-cell *matHeaderCellDef> Mobile </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.mobile}} </mat-cell>
+      </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="total_amount">
+        <mat-header-cell *matHeaderCellDef> Total Amount </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.total_amount}} </mat-cell>
+      </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="Airline">
+        <mat-header-cell *matHeaderCellDef> Airline</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.Airline}} </mat-cell>
+      </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="Sectors">
+        <mat-header-cell *matHeaderCellDef>Sectors</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.Sectors}} </mat-cell>
+      </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="Status">
+        <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <a (click)="myFunction(element ,i)">{{element.Status }}</a>
+        </mat-cell>
+      </ng-container>
+      <!-- <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+    <mat-cell *matCellDef="let element"> 
+      <a routerLink="/viewDeals/?id={{element.ID}}"><mat-icon>View</mat-icon></a>  -->
+      <!-- <a routerLink="/viewVisaDetails/?id={{element.ID}}"><mat-icon>View</mat-icon></a>
+    </mat-cell>
+  </ng-container> -->
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50, 100, 500, 1000]" [showFirstLastButtons]="true"
+      [length]="resultsLength">
+    </mat-paginator>
+  </section>
+  <!-- <div *ngFor="let field of ticketReportData">{{field.ref_no}}</div> -->
+</div>
+<!-- <p>{{hoteldata.hotel_address}}</p> -->
+<p-dialog header="Ticket Report Data" [(visible)]="isStatusPopup" [modal]="true" [responsive]="true" [width]="800" [minWidth]="200"
+  [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+  <button type="button" mat-button mat-raised-button color="primary" icon="pi pi-check" (click)="isStatusPopup=false" label="Close Popup">Close Popup</button>
+  <section class="content" style="background:white">
+    <table style="width:100%; background:white;">
+      <tr>
+        <th>S.No</th>
+        <th style="padding-left:50px;">Field</th>
+        <th>Value</th>
+      </tr>
+      <tr *ngFor="let fields of filterKeys | keyValue; let i = index; ">
+        <td style="padding-left:5px;">{{i+1}}</td>
+        <td style="padding-left:50px;">{{fields.key}}</td>
+        <td>{{fields.value}}</td>
+      </tr>
+    </table>
+  </section>
+  <p-footer>
+  </p-footer>
+</p-dialog>
+<p-dialog header="Reservation Details" [(visible)]="isRefNoPopup" [modal]="true" [responsive]="true" [width]="600" [minWidth]="200"
+  [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+  <section class="content" style="background:white">
+    <b>Reservation Details</b>
+    
+
+    <table style="width:100%; background:white;">
+      <tr>
+        <th>S.No</th>
+        <th>Type</th>
+        <th>Name</th>
+        <th>DOB</th>
+        <th>Gender</th>
+        <th>Nationality</th>
+      </tr>
+      <tr *ngFor="let travellers of reservationTravellers; let i = index;">
+        <td>{{i+1}}</td>
+        <td>{{travellers.type}}</td>
+        <td>{{travellers.name}}</td>
+        <td>{{travellers.dob | date}}</td>
+        <td>{{travellers.gender}}</td>
+        <td>{{travellers.nationality}}</td>
+      </tr>
+    </table>
+  </section>
+  <p-footer>
+  <button type="button" mat-button mat-raised-button color="primary" icon="pi pi-check" (click)="isRefNoPopup=false" label="Close">Close Popup</button>
+    
+  </p-footer>
+</p-dialog>
+<app-footer></app-footer>

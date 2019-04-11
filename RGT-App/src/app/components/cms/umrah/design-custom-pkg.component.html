@@ -1,0 +1,217 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>
+      Umrah
+    </h1>
+    <!-- <small>Create New Visa</small> -->
+    <ol class="breadcrumb">
+      <li>
+        <a routerLink="/umrah">
+          <i class="fa fa-edit"></i> Umrah</a>
+      </li>
+      <li class="active">New Umrah</li>
+    </ol>
+  </section>
+  <section class="content">
+    <div class="box box-warning">
+      <div class="box-header with-border">
+        <h1 class="text-center box-title">Custom Packages</h1>
+      </div>
+      <div class="box-body">
+        <form [formGroup]="createUmrahPkgForm" class="classic-form position-relative" (submit)="createUmrahPackage(createUmrahPkgForm.value)">
+          <div class="form-group row">
+            <div class="col-sm-2 col-xs-12">
+              <label>Adults * (10+ Years)</label>
+              <select formControlName="adults" class="form-control">
+                <option value="">-- Select Adults --</option>
+                <option *ngFor="let item of createRange(40)" value="{{item}}">{{item}}</option>
+              </select>
+              <p class="form-error" *ngIf="createUmrahPkgForm.get('adults').invalid && createUmrahPkgForm.get('adults').touched">Passenger required</p>
+              <!-- <mat-form-field>
+                <mat-select formControlName="adults" class="form-control" placeholder="Select">
+                  <mat-option *ngFor="let item of createRange(10)" value="{{item}}">{{item}}</mat-option>
+                </mat-select>
+              </mat-form-field> -->
+            </div>
+            <div class="col-sm-2 col-xs-12">
+              <label>Child (02-10 Years)</label>
+              <select formControlName="children" class="form-control">
+                <option value="0">-- Select Children --</option>
+                <option *ngFor="let item of createRange(30)" value="{{item}}">{{item}}</option>
+              </select>
+            </div>
+            <div class="col-sm-2 col-xs-12">
+              <label>Infant (0-02 Years)</label>
+              <select formControlName="infant" class="form-control">
+                <option value="0">-- Select Infant --</option>
+                <option *ngFor="let item of createRange(10)" value="{{item}}">{{item}}</option>
+              </select>
+            </div>
+            <div class="col-sm-3 col-xs-12">
+              <label>Phone *</label>
+              <input type="text" formControlName="Phone" prefix="+92 " mask="(000) 000 00 00" class="form-control" placeholder="Phone">
+              <p class="form-error" *ngIf="createUmrahPkgForm.get('Phone').invalid && createUmrahPkgForm.get('Phone').touched">Phone required</p>
+            </div>
+            <div class="col-sm-2 col-xs-12">
+              <label>Travel Date *</label>
+              <mat-form-field>
+                <input matInput [matDatepicker]="picker" formControlName="travelDate" [min]="currentDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              <p class="form-error" *ngIf="!createUmrahPkgForm.get('travelDate').valid && createUmrahPkgForm.get('travelDate').touched">Travel Date required</p>
+            </div>
+          </div>
+          <div formArrayName="accommodations" *ngFor="let hotel of createUmrahPkgForm.get('accommodations').controls;let i=index">
+            <div formGroupName="{{i}}">
+              <div class="form-group row mb-sm-3 mb-0">
+                <div class="col-sm-2 col-xs-6">
+                  <label>Location *</label>
+                  <select formControlName="locations" class="form-control" (change)="getHotelList($event, i)">
+                    <option value="">-- Select Location --</option>
+                    <option value="Makkah">Makkah</option>
+                    <option value="Madinah">Madinah</option>
+                  </select>
+                  <!-- <mat-form-field class="form-control material-select material-input rounded-0 mb-4 mb-sm-0 shadow">
+                    <mat-select placeholder="-- City --" formControlName="locations" (change)="getHotelList($event, i)">
+                      <mat-option value="Makkah">Makkah</mat-option>
+                      <mat-option value="Madinah">Madinah</mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+                </div>
+                <div class="col-sm-1 col-xs-6">
+                  <label>Night *</label>
+                  <select formControlName="totalNights" class="form-control">
+                    <option value="">-- Select Nights --</option>
+                    <option *ngFor="let item of createRange(10)" value="{{item}}">{{item}}</option>
+                  </select>
+                  <!-- <mat-form-field class="form-control material-select material-input rounded-0 mb-4 mb-sm-0 shadow">
+                    <mat-select placeholder="Nights" formControlName="totalNights">
+                      <mat-option *ngFor="let item of createRange(10)" value="{{item}}">{{item}}</mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+                </div>
+                <div class="col-sm-3 col-xs-12">
+                  <label>Hotel Name *</label>
+                  <select placeholder="Select Hotel Name" formControlName="hotelId" class="form-control" (change)="setHotelName($event, i)">
+                    <option *ngFor="let hotel of getHotelsByType(createUmrahPkgForm.controls['accommodations']?.value[i]?.locations)" [value]="hotel.ID">{{hotel.hotelName}}</option>
+                  </select>
+                  <!-- <mat-form-field class="form-control material-select material-input rounded-0 mb-4 mb-sm-0 shadow">
+                    <mat-select placeholder="Select Hotel Name" formControlName="hotelId" (change)="setHotelName($event, i)">
+                      <mat-option *ngFor="let hotel of getHotelsByType(createUmrahPkgForm.controls['accommodations']?.value[i]?.locations)" [value]="hotel.id">{{hotel.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+                  <input type="hidden" formControlName="hotelName" id="hotelName{{i}}">
+                </div>
+                <div class="col-sm-2 col-xs-4">
+                  <label>Double</label>
+                  <select formControlName="doubleRoom" class="form-control" id="doubleRoom{{i}}" (change)="calcTotalRooms($event, i)">
+                    <option value="">-- Double --</option>
+                    <option *ngFor="let item of createRange(20)" value="{{item}}">{{item}}</option>
+                  </select>
+                </div>
+                <div class="col-sm-2 col-xs-4">
+                  <label>Triple</label>
+                  <select formControlName="tripleRoom" class="form-control" id="tripleRoom{{i}}" (change)="calcTotalRooms($event, i)">
+                    <option value="">-- Triple --</option>
+                    <option *ngFor="let item of createRange(20)" value="{{item}}">{{item}}</option>
+                  </select>
+                </div>
+                <div class="col-sm-2 col-xs-4">
+                  <label>Quad</label>
+                  <select formControlName="quadRoom" class="form-control" id="quadRoom{{i}}" (change)="calcTotalRooms($event, i)">
+                    <option value="">-- Quad --</option>
+                    <option *ngFor="let item of createRange(20)" value="{{item}}">{{item}}</option>
+                  </select>
+                </div>
+                <input type="hidden" formControlName="totalRooms" id="totalRooms{{i}}">
+                <p class="form-error" id="accommodationRowError{{i}}"></p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-4">
+              <button type="button" color="primary" class="mb-3" mat-button mat-raised-button (click)="addAccommodationFields()">Add More</button>
+              <button type="button" *ngIf="createUmrahPkgForm.get('accommodations').length == 3" color="default" mat-button mat-raised-button
+                (click)="removeAccommodationFields(2)">Remove</button>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-2 col-xs-6">
+              <mat-checkbox formControlName="visa" [(ngModel)]="isVisa"> Visa</mat-checkbox>
+            </div>
+            <div class="col-sm-2 col-xs-6">
+              <mat-checkbox formControlName="isTransport" [(ngModel)]="isTransport"> Transport</mat-checkbox>
+            </div>
+            <div class="col-sm-8 col-xs-12" *ngIf="isTransport">
+              <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                  <label>Vehicle</label>
+                  <select placeholder="-- Vehicle --" formControlName="vehicleId" class="form-control" (change)="getDropdownText($event, 'vehicle')">
+                    <option [value]="0">-- Select Vehicle --</option>
+                    <option *ngFor="let v of vehicleLists;" [value]="v.ID">{{v.vehicleType}}</option>
+                  </select>
+                  <!-- <mat-form-field class="form-control material-select material-input rounded-0 mb-4 mb-sm-0 shadow">
+                    <mat-select placeholder="-- Vehicle --" formControlName="vehicleId" (change)="getDropdownText($event, 'vehicle')">
+                      <mat-option [value]="0">-- None --</mat-option>
+                      <mat-option *ngFor="let v of vehicleLists;" [value]="v.ID">{{v.vehicleType}}</mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+                  <input type="hidden" formControlName="vehicleName">
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                  <label>Sector</label>
+                  <select placeholder="-- Select Sector --" formControlName="sectorId" class="form-control" (change)="getDropdownText($event, 'sector')">
+                    <option [value]="0">-- Select Sector --</option>
+                    <option *ngFor="let sec of sectorLists;" [value]="sec.ID">{{sec.sector}}</option>
+                  </select>
+                  <!-- <mat-form-field class="form-control material-select material-input rounded-0 mb-4 mb-sm-0 shadow">
+                    <mat-select placeholder="-- Select Sector --" formControlName="sectorId" (change)="getDropdownText($event, 'sector')">
+                      <mat-option [value]="0">-- None --</mat-option>
+                      <mat-option *ngFor="let sec of sectorLists;" [value]="sec.ID">{{sec.sector}}</mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+                  <input type="hidden" formControlName="sectorName">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row mb-sm-3 mb-0">
+            <div class="col-sm-4">
+              <input type="text" formControlName="Name" class="form-control" placeholder="Name">
+              <!-- <mat-form-field class="form-control material-input rounded-0 mb-4 mb-sm-0 shadow">
+                <input type="text" formControlName="Name" class="rounded-0" placeholder="Name" matInput>
+              </mat-form-field> -->
+              <p class="form-error" *ngIf="!createUmrahPkgForm.get('Name').valid && createUmrahPkgForm.get('Name').touched">Name required</p>
+            </div>
+            <div class="col-sm-4">
+              <input type="text" formControlName="Email" class="form-control" placeholder="Email" matInput>
+              <!-- <mat-form-field class="form-control material-input rounded-0 mb-4 mb-sm-0 shadow">
+                <input type="text" formControlName="Email" class="rounded-0" placeholder="Email" matInput>
+              </mat-form-field> -->
+              <p class="form-error" *ngIf="!createUmrahPkgForm.get('Email').valid && createUmrahPkgForm.get('Email').touched">Email required</p>
+            </div>
+            <div class="col-sm-4">
+              <textarea formControlName="Remarks" class="form-control" cols="30" rows="1" placeholder="Remarks / Comments" matInput></textarea>
+              <!-- <mat-form-field class="form-control material-input rounded-0 mb-4 mb-sm-0 shadow">
+                <textarea formControlName="Remarks" class="rounded-0" cols="30" rows="1" placeholder="Remarks / Comments" matInput></textarea>
+              </mat-form-field> -->
+            </div>
+          </div>
+          <input type="hidden" formControlName="formType" id="formType">
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <!-- <button type="submit" class="btn btn-info" (click)="setFormType('preview')">Preview</button> -->
+              <button type="submit" class="btn bg-olive" (click)="setFormType('create')">Calculate Umrah Package</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+
+<app-footer></app-footer>

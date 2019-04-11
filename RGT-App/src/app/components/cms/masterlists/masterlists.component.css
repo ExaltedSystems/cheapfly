@@ -1,0 +1,38 @@
+.mat-column-sno{
+  flex: 0 0 60px;
+}
+.mat-header-cell {
+  font-size: 14px;
+  font-weight: 900;
+}
+.mat-column-Item-Text{
+  flex: 0 0 500px;
+  /* text-align: center; */
+}
+.mat-column-Type{
+  flex: 0 0 200px;
+  text-align: center;
+}
+.mat-column-actions, .mat-column-status{
+  flex: 0 0 100px;
+  text-align: center;
+}
+/* .example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+.tableHeader{
+    margin-top: -58px;
+}
+.sNo{
+    margin-top: 50px;
+}
+.check{
+  margin-top: 8px;
+} */

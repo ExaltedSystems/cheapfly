@@ -1,0 +1,55 @@
+<section class="contents">
+  <div class="container">
+    <!-- <form [formGroup]="testForm" (submit)="showData()">
+      <div class="form-group">
+        <div *ngFor="let facl of formData; let i = index" formArrayName="mainFacility">
+          <div formGroupName="{{i}}">
+              <h4>{{facl.name}}</h4>
+              <div *ngFor="let sub of facl.sub; let fi = index" formArrayName="sub">
+                  <div formGroupName="{{fi}}">
+                      <mat-checkbox formControlName="{{sub.id}}" value="1">{{sub.name}}</mat-checkbox>
+                  </div>
+                </div>
+          </div>
+        </div>
+      </div>
+      <input type="submit" value="Show Data">
+    </form> -->
+
+
+    <form [formGroup]="testForm" (submit)="showData(testForm.value)">
+        <div class="form-group">
+          <div *ngFor="let facl of testForm.controls.mainFacility.controls; let i = index" formArrayName="mainFacility">
+            <div formGroupName="{{i}}">
+                <h4>{{facl.get('name').value}}</h4>
+                <div *ngFor="let sub of facl.get('sub').controls; let s = index" formArrayName="sub">
+                  <!-- count {{s}} -->
+                  <div formGroupName="{{s}}">
+                    <!-- <input type="checkbox" formControlName="value"> {{sub.get('name').value}}  -->
+                    <div class="col-sm-12">
+                        <div class="col-sm-4">
+                            <mat-checkbox name="{{sub.get('id').value}}" formControlName="value" (change)="sub.get('roomOpt').value=$event.checked">{{sub.get('name').value}}</mat-checkbox>
+                        </div>
+                        <div class="col-sm-5 col-sm-offset-2" *ngIf="sub.get('roomOpt').value == true">
+                          <mat-radio-group formControlName="option">
+                            <!-- <span *ngFor="let opt of sub.get('option').controls; let o = index" formArrayName="option"> -->
+                              <!-- <span formGroupName="{{o}}"> -->
+                                  <!-- <mat-radio-button name="{{opt.get('option').value}}" [value]="opt.get('id').value">{{opt.get('option').value}}</mat-radio-button> -->
+                                  <mat-radio-button checked="true" [value]="1">All Rooms</mat-radio-button>
+                                  <mat-radio-button checked="false" [value]="2">Some Rooms</mat-radio-button>
+                              <!-- </span>
+                            </span> -->
+                          </mat-radio-group>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <input type="submit" value="Show Data">
+    </form>
+    
+    
+  </div>
+</section>

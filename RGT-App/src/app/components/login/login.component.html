@@ -1,0 +1,43 @@
+<div class="login-page">
+  <div class="login-bg">
+    <div class="login-box">
+      <div class="login-logo">
+        <img src="../../assets/img/logo-drk-blue.png" alt="">
+      </div>
+      <alert></alert>
+      <!-- /.login-logo -->
+      <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+      <mat-card>
+        <form (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+          <div class="form-group has-feedback" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+            <input type="text" class="form-control" placeholder="User Name / Email" name="email" [(ngModel)]="model.email" autocomplete="off" #email="ngModel" required>
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            <div *ngIf="f.submitted && !email.valid && email.touched" class="form-error">email is required</div>
+          </div>
+          <div class="form-group has-feedback" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+            <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="model.password" autocomplete="off" #password="ngModel" required>
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            <div *ngIf="f.submitted && !password.valid" class="form-error">Password is required</div>
+          </div>
+          <div class="row">
+            <div class="col-xs-7">
+              <div class="checkbox">
+                  <mat-checkbox name="remember" [(ngModel)]="model.remember" #remember="ngModel">Remember Me</mat-checkbox>
+              </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-xs-5">
+                <button type="submit" [disabled]="loading" id="logIn" class="btn btn-primary btn-raised btn-block btn-flat">Login</button>
+            </div>
+            <!-- /.col -->
+          </div>
+        </form>
+    
+        <a href="#">I forgot my password</a><br>
+        <!-- <a href="register.html" class="text-center">Register a new membership</a> -->
+      </mat-card>
+      <!-- /.login-box-body -->
+    </div>  
+  </div>
+  
+</div>

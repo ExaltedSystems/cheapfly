@@ -1,0 +1,95 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Register New User
+    </h1>
+    <small>New User Registration</small>
+    <ol class="breadcrumb">
+      <li>
+        <a routerLink="/dashboared">
+          <i class="fa fa-edit"></i> Dashboard</a>
+      </li>
+      <li class="active">Register User</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="box box-warning">
+          <div class="box-header with-border">
+            <h3 class="box-title">Register New User</h3>
+            <!-- <p>{{hoteldata.hotel_address}}</p> -->
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <alert></alert>
+            <div class="row">
+              <div class="col-sm-6">
+                <form [formGroup]="registerForm" (submit)="registerUser(registerForm.value)" class="classic-form">
+                  <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" formControlName="name" name="name" id="name" placeholder="Enter ..." autocomplete="off">
+                    <span class="form-error" *ngIf="registerForm.controls['name'].hasError('required') && registerForm.controls['name'].touched">
+                      Name is required
+                    </span>
+                  </div>
+                  <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" formControlName="email" name="email" id="email" placeholder="Enter ..." autocomplete="off">
+                    <span class="form-error" *ngIf="registerForm.controls['email'].touched && registerForm.controls['email'].invalid">
+                      Please Enter a Valid Email
+                    </span>
+                    <span class="form-error" *ngIf="registerForm.controls['email'].hasError('required') && registerForm.controls['email'].touched">
+                      Email is required
+                    </span>
+                    <div *ngIf="registerForm.get('email').status === 'PENDING'">
+                      Checking...
+                    </div>
+                    <div class="text-success" *ngIf="registerForm.get('email').status === 'VALID'">
+                      Email is available!
+                    </div>
+                    <div class="form-error" *ngIf="registerForm.get('email').errors && registerForm.get('email').errors.emailTaken">
+                      😢 Oh noes, this email is already taken!
+                    </div>
+                  </div>
+                  <div [formGroup]="passwordFormGroup">
+                    <div class="form-group">
+                      <label>Password</label>
+                      <input type="password" class="form-control" validateEqualTo="retype_password" [(ngModel)]="user.password" formControlName="password"
+                        placeholder="Enter ...">
+                      <span class="form-error" *ngIf="passwordFormGroup.controls['password'].hasError('required') && passwordFormGroup.controls['password'].touched">
+                        Password is required
+                      </span>
+                    </div>
+                    <ng2-password-strength-bar [passwordToCheck]="user.password" [barLabel]="barLabel" [barColors]="myColors">
+                    </ng2-password-strength-bar>
+                    <br>
+                    <div class="form-group">
+                      <label>Retype Password</label>
+                      <input type="password" class="form-control" formControlName="retype_password" placeholder="Enter ...">
+                      <span class="form-error" *ngIf="passwordFormGroup.controls['retype_password'].hasError('required') && passwordFormGroup.controls['retype_password'].touched">
+                        Please Retype Password
+                      </span>
+                      <p class="form-error" *ngIf="passwordFormGroup.errors?.doesMatchPassword">Password does not match</p>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn bg-olive" [disabled]="!registerForm.valid || passwordFormGroup.errors?.doesMatchPassword || !passwordFormGroup.valid">Submit</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /.content -->
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,66 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1> Umrah Terms & Conditions </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a routerLink="/umrah">
+                    <li class="fa fa-edit"></li> Umrah</a>
+            </li>
+            <li class="active">Terms & Conditions / Requirements / Package Include / Notes</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="box box-warning">
+                    <div class="box-body">
+                        <form class="classic-form form-horizontal" [formGroup]="T_CForm" (submit)=addT_C(T_CForm.value)>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label><b>Terms & Conditions</b></label>
+                                    <ck-editor skin="moono-lisa" formControlName="termCondition" language="en"></ck-editor>
+                                    <div class="form-error" *ngIf="T_CForm.controls['termCondition'].hasError('required') && T_CForm.controls['termCondition'].touched ">
+                                        Terms & Conditions field is required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label><b>Notes</b></label>
+                                    <ck-editor skin="moono-lisa" formControlName="notes" language="en"></ck-editor>
+                                    <div class="form-error" *ngIf="T_CForm.controls['notes'].hasError('required') && T_CForm.controls['notes'].touched ">
+                                        Notes field is required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label><b>Package Includes</b></label>
+                                    <ck-editor skin="moono-lisa" formControlName="pkgIncludes" language="en"></ck-editor>
+                                    <div class="form-error" *ngIf="T_CForm.controls['pkgIncludes'].hasError('required') && T_CForm.controls['pkgIncludes'].touched ">
+                                        Package Includes field is required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label><b>Requirements</b></label>
+                                    <ck-editor skin="moono-lisa" formControlName="requirements" language="en"></ck-editor>
+                                    <div class="form-error" *ngIf="T_CForm.controls['requirements'].hasError('required') && T_CForm.controls['requirements'].touched ">
+                                        Requirements field is required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <br>
+                                <button type="submit" name="insert_btn" [disabled]="!T_CForm.valid" value="insert_btn" class="btn bg-olive pull-right">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

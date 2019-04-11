@@ -1,0 +1,133 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      New User
+    </h1>
+    <small>Create New User</small>
+    <ol class="breadcrumb">
+      <li>
+        <a routerLink="/users">
+          <i class="fa fa-edit"></i> Users</a>
+      </li>
+      <li class="active">New User</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="box box-warning">
+          <div class="box-header with-border">
+            <h3 class="box-title">New User</h3>
+            <!-- <p>{{hoteldata.hotel_address}}</p> -->
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <form [formGroup]="addEditUser" (submit)="addEditUsers(addEditUser.value)" class="classic-form form-horizontal" enctype="multipart/form-data">
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <label>Name:</label>
+                  <input type="text" class="form-control" formControlName="name">
+                  <div class="form-error" *ngIf="addEditUser.controls['name'].hasError('required') && addEditUser.controls['name'].touched ">
+                    Name is required
+                  </div>
+                </div>
+                <!-- </div>
+                        <div class="form-group"> -->
+                <div class="col-sm-6">
+                  <label>Email</label>
+                  <input type="text" class="form-control" formControlName="email">
+                  <div class="form-error" *ngIf="addEditUser.controls['email'].hasError('required') && addEditUser.controls['email'].touched ">
+                    Email is required
+                  </div>
+                </div>
+              </div>
+              <div [formGroup]="passwordFormGroup">
+                <div class="form-group">
+                  <div class="col-sm-6">
+                    <label>Password</label>
+                    <input type="password" class="form-control" validateEqualTo="retype_password" [(ngModel)]="user.password" formControlName="password"
+                      placeholder="Enter ...">
+                    <span class="form-error" *ngIf="passwordFormGroup.controls['password'].hasError('required') && passwordFormGroup.controls['password'].touched">
+                      Password is required
+                    </span>
+                  </div>
+                  <div class="col-sm-6">
+                    <label>Retype Password</label>
+                    <input type="password" class="form-control" formControlName="retype_password" placeholder="Enter ...">
+                    <span class="form-error" *ngIf="passwordFormGroup.controls['retype_password'].hasError('required') && passwordFormGroup.controls['retype_password'].touched">
+                      Please Retype Password
+                    </span>
+                    <p class="form-error" *ngIf="passwordFormGroup.errors?.doesMatchPassword">Password does not match</p>
+                  </div>
+                </div>
+                <ng2-password-strength-bar [passwordToCheck]="user.password" [barLabel]="barLabel" [barColors]="myColors">
+                </ng2-password-strength-bar>
+              </div>
+              <!-- <div class="form-group">
+                <div class="col-sm-4">
+                  <label>Status</label>
+                  <select class="form-control" formControlName="status">
+                    <option value="">-- Select Status --</option>
+                    <option value="1">Enabled</option>
+                    <option value="0">Disabled</option>
+                  </select>
+                  <div class="form-error" *ngIf="addEditUser.controls['status'].hasError('required') && addEditUser.controls['status'].touched ">
+                    Page Status is required
+                  </div>
+                </div>
+              </div> -->
+              <button type="submit" [disabled]="!addEditUser.valid" class="btn bg-olive">Submit</button>
+              <i class="form-error">{{btnSubmitError}}</i>
+            </form>
+            <h3>{{successErrorMsg}}</h3>
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="box box-warning">
+          <div class="box-header with-border">
+            <h3 class="box-title">Page Image</h3>
+            <!-- <p>{{hoteldata.hotel_address}}</p> -->
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <div class="classic-form">
+              <a data-toggle="collapse" href="#showThumbnailImage" role="button" class="d-flex align-items-center">New Image</a>
+              <div class="form-group collapse" id="showThumbnailImage">
+                <fancy-image-uploader [options]="thumbnailOptions" (onUpload)="onUpload($event)"></fancy-image-uploader>
+              </div>
+              <div class="form-group">
+                <img src="{{thumbnailImage}}" alt="{{imageAlt}}" width="100%">
+              </div>
+              <div class="form-group">
+                <label>Image Title</label>
+                <input type="text" class="form-control" name="imageTitle">
+              </div>
+              <div class="form-group">
+                <label>Image Alt</label>
+                <input type="text" class="form-control" name="imageAlt">
+              </div>
+              <!-- <div class="form-group">
+                        <label>Parent Id</label>
+                        <select class="form-control" name="parentid">
+                          <option value="option">options</option>
+                        </select>
+                    </div> -->
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- /.content -->
+</div>
+<app-footer></app-footer>

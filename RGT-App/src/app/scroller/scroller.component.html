@@ -1,0 +1,199 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Web Scroller
+    </h1>
+    <small>Create new Scroller</small>
+    <ol class="breadcrumb">
+      <li>
+        <a routerLink="/scroller">
+          <i class="fa fa-edit"></i> Scroller</a>
+      </li>
+      <li class="active">New Scroller</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="box box-warning">
+          <div class="box-header with-border">
+            <h3 class="box-title">New Scroller</h3>
+            <!-- <p>{{hoteldata.hotel_address}}</p> -->
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <form class="classic-form form-horizontal" [formGroup]="scrollerForm" (submit)=addScroller(scrollerForm.value)>
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <label>Name</label>
+                  <input type="text" formControlName="name" class="form-control">
+                  <div class="form-error" *ngIf="scrollerForm.controls['name'].hasError('required') && scrollerForm.controls['name'].touched">
+                    Name field required
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label>Meta Title</label>
+                  <input type="text" formControlName="metaTitle" class="form-control">
+                  <div class="form-error" *ngIf="scrollerForm.controls['metaTitle'].hasError('required') && scrollerForm.controls['metaTitle'].touched">
+                    Meta Title field required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <label>image_alt</label>
+                  <input type="text" formControlName="image_alt" class="form-control">
+                  <div class="form-error" *ngIf="scrollerForm.controls['image_alt'].hasError('required') && scrollerForm.controls['image_alt'].touched">
+                    image_alt field required
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label>Image_title</label>
+                  <input type="text" formControlName="Image_title" class="form-control">
+                  <div class="form-error" *ngIf="scrollerForm.controls['Image_title'].hasError('required') && scrollerForm.controls['Image_title'].touched">
+                    Image_title field required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <label>Meta Keywords</label>
+                  <input type="text" formControlName="metaKeywords" class="form-control">
+                  <div class="form-error" *ngIf="scrollerForm.controls['metaKeywords'].hasError('required') && scrollerForm.controls['metaKeywords'].touched">
+                    Meta Keywords field required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <label>Meta Description</label>
+                  <textarea formControlName="metaDescription" class="form-control" type="text" rows="3"></textarea>
+                  <div class="form-error" *ngIf="scrollerForm.controls['metaDescription'].hasError('required') && scrollerForm.controls['metaDescription'].touched">
+                    Meta Description field required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <label>URL</label>
+                  <input type="text" formControlName="url" class="form-control">
+                  <div class="form-error" *ngIf="scrollerForm.controls['url'].hasError('required') && scrollerForm.controls['url'].touched">
+                    URL field required
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label>Sort(number/order in which want to display)</label>
+                  <input type="number" formControlName="sort" class="form-control">
+                  <div class="form-error" *ngIf="scrollerForm.controls['sort'].hasError('required') && scrollerForm.controls['sort'].touched">
+                    sort field required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <label>Activation Date</label>
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="picker" formControlName="activationDate" placeholder="Pick a date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                  <div class="form-error" *ngIf="scrollerForm.controls['activationDate'].hasError('required') && scrollerForm.controls['activationDate'].touched">
+                    Activation Date field required
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label>DeActivation Date</label>
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="pick" formControlName="deActivationDate" placeholder="Pick a date">
+                    <mat-datepicker-toggle matSuffix [for]="pick"></mat-datepicker-toggle>
+                    <mat-datepicker #pick></mat-datepicker>
+                  </mat-form-field>
+                  <div class="form-error" *ngIf="scrollerForm.controls['deActivationDate'].hasError('required') && scrollerForm.controls['deActivationDate'].touched">
+                    DeActivation Date field required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <label>Description</label>
+                  <br>
+                  <!-- <textarea class="form-control" name="description" id="detail"></textarea> -->
+                  <ck-editor formControlName="description" [(ngModel)]="editorValue" skin="moono-lisa" language="en" [fullPage]="true"></ck-editor>
+                  <div class="form-error" *ngIf="scrollerForm.controls['description'].hasError('required') && scrollerForm.controls['description'].touched">
+                    description field required
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <mat-checkbox formControlName="status">Status</mat-checkbox>
+                </div>
+              </div>
+              <br>
+              <div class="form-group">
+                <div class="col-sm-6">
+              <div class="text-center">
+                <br>
+                <button type="submit" name="insert_btn" [disabled]="!scrollerForm.valid" value="insert_btn" class="btn bg-olive">Insert</button>
+              </div>
+            </div>
+            <div class="col-sm-6" *ngIf="succErrMsg">
+              <h3 [class]="succErrCls">{{succErrMsg}}</h3>
+            </div>
+            </div>
+            </form>
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="box box-warning">
+          <div class="box-header with-border">
+            <h3 class="box-title">Page Image</h3>
+            <!-- <p>{{hoteldata.hotel_address}}</p> -->
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <!-- <form action="" class="classic-form"> -->
+            <div class="classic-form">
+              <a data-toggle="collapse" href="#showThumbnailImage" role="button" class="d-flex align-items-center">New Image</a>
+              <div class="form-group collapse" id="showThumbnailImage">
+                <fancy-image-uploader [options]="thumbnailOptions" (onUpload)="onUpload($event)"></fancy-image-uploader>
+              </div>
+              <div class="form-group">
+                <img src="http://192.168.100.75/rgtapp/{{thumbnailImage}}" alt="{{imageAlt}}" width="100%">
+              </div>
+            </div>
+            <!-- </form> -->
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /.content -->
+</div>
+<!-- CK Editor -->
+<script src="../../../../assets/js/ckeditor.js"></script>
+<script>
+  $(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('editor1')
+  })
+</script>
+<p-dialog header="Upload Deal Image" [(visible)]="isImagePopup" [modal]="flase" [responsive]="true" [width]="350" [minWidth]="200"
+[minY]="70" [maximizable]="true" [baseZIndex]="10000">
+<fancy-image-uploader [options]="thumbnailOptions" (onUpload)="onUpload($event)"></fancy-image-uploader>
+<p-footer>
+  <button type="button" mat-button color="warn" icon="pi pi-check" (click)="isImagePopup=false" label="Close Popup">Close Popup</button>
+</p-footer>
+</p-dialog>
+<app-footer></app-footer>

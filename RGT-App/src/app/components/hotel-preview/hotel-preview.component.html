@@ -1,0 +1,133 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Property Preview
+      <br>
+    </h1>
+    <small>This is an overview of all the information you've provided about your property. You can edit or update these details
+      and preview
+      <br> what your property might look like on the Rehmantravel.com website here.</small>
+    <ol class="breadcrumb">
+      <li>
+        <a routerLink="{{backPage}}">
+          <i class="fa fa-chevron-left"></i> {{backpageTitle}}</a>
+      </li>
+      <li class="active">Hotel Preview</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="box box-warning">
+      <div class="box-header with-border">
+        <h3 class="box-title">{{hotelData.name}}</h3>
+        <!-- <p>{{hoteldata.hotel_address}}</p> -->
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <p> Here is where a description of your property will go, plus any information about the surrounding area and points
+          of interest for travelers.</p>
+        <br>
+
+        <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+
+        <p>Number of rooms: {{hotelData.total_rooms}}</p>
+        <h4>Room Types at {{hotelData.name}}</h4>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>&nbsp;</th>
+              <th width="15%" class="td-filled">Conditions</th>
+              <th width="12%">Max occupancy</th>
+              <th width="12%" class="td-filled">Price per Night</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let room of hotelData.room_details">
+              <td>
+                <b class="text-primary">{{room.room_title}}</b>
+                <p>
+                  <b>Facilities:</b> {{room.room_facilities}}</p>
+              </td>
+              <td class="td-filled">
+                <div [ngSwitch]="hotelData.breakfast">
+                  <div *ngSwitchCase="'Yes, Included in Price'">Good Breakfast Included</div>
+                  <div *ngSwitchCase="'Yes, Its Optional'">Good Breakfast
+                    <br> PKR:{{hotelData.breakfast_price}}/-</div>
+                </div>
+              </td>
+              <td align="center">
+                <span class="fa fa-user"> x {{room.no_of_guest}}</span>
+              </td>
+              <td class="td-filled">
+                <b class="text-primary">PKR </b>{{room.price_pp_pn}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <h4>{{hotelData.property_title}} Info</h4>
+        <table class="table table-bordered" cellspacing="7">
+          <tr>
+            <td width="30%">
+              <b>Check In</b>
+            </td>
+            <td>{{hotelData.checkin_from}} -- {{hotelData.checkin_to}}</td>
+          </tr>
+          <tr>
+            <td>
+              <b>Check Out</b>
+            </td>
+            <td>{{hotelData.checkout_from}} -- {{hotelData.checkout_to}}</td>
+          </tr>
+        </table>
+
+        <h4>Policies at {{hotelData.name}}</h4>
+        <table class="table table-bordered" cellspacing="7">
+          <tr>
+            <td width="30%">
+              <b>Cancellation/Prepayment</b>
+            </td>
+            <td>
+              <span *ngIf="hotelData.cancellation_days > 1">The guest must cancel 2 days in advance or pay 100% of the price of the
+                <span *ngIf="hotelData.cancellation_charges == 'full_stay'">whole stay.</span>
+                <span *ngIf="hotelData.cancellation_charges == 'first_night'">first night.</span>
+              </span>
+              <span *ngIf="hotelData.cancellation_days == 1">Guests won't be charged anything if they cancel 1 day before check-in, otherwise they will pay for the full
+                stay</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Accepted credit cards</b>
+            </td>
+            <td>
+              <!-- <span *ngIf="hotelData.payment_mothods.payment_form.mestro">American Express</span> -->
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>VAT/Tax settings</b>
+            </td>
+            <td>{{hotelData.checkout_from}} -- {{hotelData.checkout_to}}</td>
+          </tr>
+          <tr>
+            <td>
+              <b>City tax</b>
+            </td>
+            <td>{{hotelData.checkout_from}} -- {{hotelData.checkout_to}}</td>
+          </tr>
+        </table>
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <div class="text-right">
+        <button mat-button mat-raised-button color="secondary">Edit</button>
+        <button mat-button mat-raised-button color="primary">Exit</button>
+    </div>
+  </section>
+  <!-- /.content -->
+</div>
+<app-footer></app-footer>

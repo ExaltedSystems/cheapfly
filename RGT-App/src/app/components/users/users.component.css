@@ -1,0 +1,15 @@
+.mat-column-sNo{
+    flex: 0 0 100px;
+  }
+  .mat-header-cell {
+    font-size: 14px;
+    font-weight: 900;
+  }
+  .mat-column-username, .mat-column-email{
+    flex: 0 0 300px;
+    /* text-align: center; */
+  }
+  .mat-column-actions, .mat-column-activated{
+    flex: 0 0 100px;
+    text-align: center;
+  }

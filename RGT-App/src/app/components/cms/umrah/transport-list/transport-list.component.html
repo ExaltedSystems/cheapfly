@@ -1,0 +1,157 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Umrah
+    </h1>
+    <!-- <small>Create New Visa</small> -->
+    <ol class="breadcrumb">
+      <li>
+        <a routerLink="/umrah">
+          <i class="fa fa-edit"></i> Umrah</a>
+      </li>
+      <li class="active">New Umrah</li>
+    </ol>
+  </section>
+  <section class="content">
+    <div class="box box-warning">
+      <div class="box-header with-border">
+        <h1 class="text-center box-title">New Transport</h1>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <form [formGroup]="newTransport" (submit)="addNewTransport(newTransport.value)" class="classic-form form-horizontal">
+          <div class="form-group">
+            <div class="col-sm-3">
+              <select formControlName="sectorId" class="form-control" placeholder="">
+                <option value="">-- Select Sector --</option>
+                <option *ngFor="let sec of allSectors" value="{{sec.ID}}">{{sec.sector}}</option>
+
+              </select>
+              <div class="form-error" *ngIf="newTransport.controls['sectorId'].hasError('required') && newTransport.controls['sectorId'].touched">
+                sector field required
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <select formControlName="vehicleId" class="form-control" placeholder="">
+                <option value="">-- Select Vehicle --</option>
+                <option *ngFor="let veh of allVehicles" value="{{veh.ID}}">{{veh.vehicleType}}</option>
+
+              </select>
+              <div class="form-error" *ngIf="newTransport.controls['vehicleId'].hasError('required') && newTransport.controls['vehicleId'].touched">
+                vehicle field required
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <input type="number" (blur)="calMarkupPrice()" formControlName="price" placeholder="Enter Price" class="form-control">
+              <div class="form-error" *ngIf="newTransport.controls['price'].hasError('required') && newTransport.controls['price'].touched">
+                price field required
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <select formControlName="markupPercent" class="form-control" placeholder="" (change)="calMarkupPrice()">
+                <option value="">-- Select percent --</option>
+                <option *ngFor="let item of createRange(30)" value="{{item}}">{{item}}</option>
+              </select>
+              <div class="form-error" *ngIf="newTransport.controls['markupPercent'].hasError('required') && newTransport.controls['markupPercent'].touched">
+                markupPercent field required
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <input type="text" formControlName="markupPrice" placeholder="Enter Markup Price" class="form-control" readonly>
+              <div class="form-error" *ngIf="newTransport.controls['markupPrice'].hasError('required') && newTransport.controls['markupPrice'].touched">
+                markupPrice field required
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="form-group">
+
+            <div class="col-sm-3">
+              <select formControlName="currencyId" class="form-control" placeholder="">
+                <option value="">-- Select currency --</option>
+                <option *ngFor="let currency of visaCurrenciesList" value="{{currency.code}}">{{currency.name}}</option>
+              </select>
+              <div class="form-error" *ngIf="newTransport.controls['currencyId'].hasError('required') && newTransport.controls['currencyId'].touched">
+                Currency field required
+              </div>
+            </div>
+            <div class="col-sm-1 check">
+              <mat-checkbox formControlName="status">Status</mat-checkbox>
+            </div>
+            <div class="col-sm-3 position-relative ">
+              <button type="submit" [disabled]="!newTransport.valid" color="primary" mat-button mat-raised-button>submit</button>
+              <button (click)="resetTransportForm()" color="default" mat-button mat-raised-button>RESET</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="example-container mat-elevation-z8">
+        <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+          <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+          <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+            No Data Found On The Server
+          </div>
+        </div>
+        <div class="table-filter" ng2-sticky>
+          <mat-form-field>
+            <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="Search" [(ngModel)]="searchValue">
+            <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchValue='';applyFilter('')">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <mat-table #table [dataSource]="parseTransportLists" matSort matSortActive="Item-Text" matSortDisableClear matSortDirection="asc">
+          <ng-container matColumnDef="S.No">
+            <mat-header-cell *matHeaderCellDef>S.No</mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index;">{{paginator.pageSize * ((paginator.pageIndex + 1) - 1) + i + 1}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="sector">
+            <mat-header-cell *matHeaderCellDef>Sector</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.sector}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="vehicle">
+            <mat-header-cell *matHeaderCellDef>Vehicle</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.vehicleType}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="currency">
+            <mat-header-cell *matHeaderCellDef>Currency</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.currencyId}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="price">
+            <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.price}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="markup">
+            <mat-header-cell *matHeaderCellDef>Markup %</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.markupPercent}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="markupPrice">
+            <mat-header-cell *matHeaderCellDef>Markup Price</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.markupPrice}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.transportStatus == 1 ? 'Enabled' : 'Disabled'}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+            <mat-cell *matCellDef="let element ">
+              <a (click)="editTransportLists(element , i)">
+                <i-edit-3 class="feather"></i-edit-3>
+              </a>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="transportColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: transportColumns;"></mat-row>
+        </mat-table>
+        <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50, 100, 150, 200, 500, 1000]" [showFirstLastButtons]="true"
+          [length]="resultsLength">
+        </mat-paginator>
+      </div>
+    </div>
+  </section>
+</div>

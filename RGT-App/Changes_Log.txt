@@ -1,0 +1,15 @@
+// to add component when 2 apps are open use
+
+--module app
+
+
+
+
+
+// add these lines of code in src/typings.d.ts file for importing json file inside typescript files
+declare module "*.json" {
+  const value: any;
+  export default value;
+}
+//add these two modules for date picker.
+import {MatDatepickerModule,MatNativeDateModule} from '@angular/material/datepicker';

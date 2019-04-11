@@ -1,0 +1,39 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Sections 
+      </h1>
+          <small>Page Sections</small>
+      <ol class="breadcrumb">
+        <li><a routerLink="/dashboared"><i class="fa fa-edit"></i> Dashboard</a></li>
+        <li class="active">Sections</li>
+      </ol>
+    </section>
+  
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="box box-warning">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Sections</h3>
+                    <button mat-button mat-raised-button color="primary" routerLink="/newSection" class="pull-right">New Section</button>
+                    <!-- <p>{{hoteldata.hotel_address}}</p> -->
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    Sections List
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+          </div>
+        </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <app-footer></app-footer>
+
